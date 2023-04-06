@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/realt"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/home"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.flatyApp">
+        <activity android:exported="false"
+            android:name="hcmute.edu.vn.phamdinhquochoa.flatyapp.UserInformationActivity" />
+        <activity
+            android:name="hcmute.edu.vn.phamdinhquochoa.flatyapp.FlatDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name="hcmute.edu.vn.phamdinhquochoa.flatyapp.CategoryActivity"
+            android:exported="false" />
+        <activity
+            android:name="hcmute.edu.vn.phamdinhquochoa.flatyapp.HomeActivity"
+            android:exported="false" />
+        <activity
+            android:name="hcmute.edu.vn.phamdinhquochoa.flatyapp.RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name="hcmute.edu.vn.phamdinhquochoa.flatyapp.FlatEditActivity"
+            android:exported="false" />
+        <activity
+            android:name="hcmute.edu.vn.phamdinhquochoa.flatyapp.LoginActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

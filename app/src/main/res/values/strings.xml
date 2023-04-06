@@ -1,0 +1,132 @@
+<resources>
+    <string name="app_name">Home App</string>
+    <string name="content_description_image">Изображение</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="prompt_is_admin">Администратор</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="dang_nhap_uppercase">АВТОРИЗОВАТЬСЯ</string>
+    <string name="dang_ky_uppercase">РЕГИСТРАЦИЯ</string>
+    <string name="hint_username">Имя аккаунта</string>
+    <string name="hint_password">Пароль</string>
+    <string name="choose_image">Укажите изображение</string>
+    <string name="fill_name">Укажите название квартиры</string>
+    <string name="fill_description">Укажите описание квартиры</string>
+    <string name="hint_phone">0984 349 xxx</string>
+    <string name="address">Дата</string>
+    <string name="add_region">Добавить район</string>
+    <string name="add_flat">Добавить квартиру</string>
+    <string name="save_flat">Сохранить</string>
+    <string name="cancel_flat">Отменить</string>
+    <string name="edit_flat">Редактировать</string>
+    <string name="delete_flat">Удалить</string>
+    <string name="edit_region">Редактировать</string>
+    <string name="dang_nhap">Авторизоваться</string>
+    <string name="dang_ky">Регистрация</string>
+    <string name="e_mail">E-mail</string>
+    <string name="password_confirm_hint">Повторите пароль</string>
+    <string name="search_hint">Поиск…</string>
+    <string name="status">Статус</string>
+    <string name="change">СОХРАНИТЬ</string>
+    <string name="cancel">ОТМЕНИТЬ</string>
+    <string name="confirm_delivery">Получить</string>
+    <string name="delete_order">Отмена</string>
+    <string name="exit">Выход</string>
+    <string name="sub">-</string>
+    <string name="default_quantity">1</string>
+    <string name="add">+</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="rice">Ребрышки рисовые</string>
+    <string name="hamburger">Сэндвич</string>
+    <string name="milk_tea">Чай с молоком</string>
+    <string name="water_Flat">Блюдо с водой</string>
+    <string name="ice_cream">Пломбир</string>
+    <string name="cake">Кекс</string>
+    <string name="meat_banh_mi">Гамбургеры</string>
+    <string name="egg_banh_mi">Яичный хлеб</string>
+    <string name="money_text_short">13.000</string>
+    <string name="money_text">13.000</string>
+    <string name="example_Flat_describe">Пицца включает в себя много питательных веществ, содержит много клетчатки и вкусного белка, приглашает вас к еде!</string>
+    <string name="example_full_name">Иван Иванов И</string>
+    <string name="example_address"> Пример</string>
+    <string name="example_user_name">Пр Мер Имя</string>
+    <string name="example_date">9/5/2022</string>
+    <string name="example_size">Стоимость</string>
+    <string name="banh_mi_co_ba">Хлебный магазин Ко Ба</string>
+    <string name="banh_ngot_le_van_viet">Кондитерская Le Van Viet</string>
+    <string name="quan_com_Phuc_Map">Ресторан битого риса Phuc Ma</string>
+    <string name="quan_kem_co_hai">Магазин мороженого мисс Хай</string>
+    <string name="quan_tra_sua">Магазин чая с молоком Coffee House</string>
+    <string name="quan_pho_gia_truyen">Лавка семейной реликвии</string>
+
+    <string name="describe">Описание</string>
+    <string name="your_information">ПЕРСОНАЛЬНЫЕ ДАННЫЕ</string>
+    <string name="gender">Гендер</string>
+    <string-array name="genders">
+        <item>Male</item>
+        <item>Female</item>
+        <item>Other</item>
+    </string-array>
+
+    <string name="date_of_birth">Дата рождения</string>
+    <string name="DoB_hint">Нажмите, чтобы выбрать дату</string>
+    <string name="Region_information">Информация о районе</string>
+    <string name="check">ЗАКАЗ</string>
+    <string name="check_coming">Приходящие</string>
+    <string name="history">История</string>
+    <string name="cart">Корзина</string>
+    <string name="notify">УВЕДОМЛЕНИЯ</string>
+    <string name="account">УЧЕТНАЯ ЗАПИСЬ</string>
+    <string name="apps">Общие</string>
+    <string name="my">Мои</string>
+    <string name="back">Назад</string>
+    <string name="size_s">A</string>
+    <string name="size_s_describe">МАЛЕНЬКИЙ</string>
+    <string name="size_m">M</string>
+    <string name="size_m_describe">СРЕДНИЙ</string>
+    <string name="size_l">L</string>
+    <string name="size_l_describe">БОЛЬШОЙ</string>
+    <string name="add_to_saved">Сохранить район</string>
+    <string name="add_to_cart">Добавить в корзину</string>
+    <string name="total">Общий</string>
+    <string name="Flat_type">Квартира</string>
+    <string name="activity_flat_edit_text_edit">Редактировать квартиру</string>
+    <string name="activity_flat_edit_text_add">Добавить квартиру</string>
+    <string name="activity_flat_edit_button_edit">Сохранить</string>
+    <string name="activity_flat_edit_button_add">Добавить</string>
+    <string name="flat_name">Название квартиры</string>
+    <string name="flat_name_hint">Название</string>
+    <string name="flat_description">Описание квартиры</string>
+    <string name="flat_description_hint">Описание</string>
+    <string name="choose_flat_image">Выбрать изображение</string>
+    <string name="Flat">Квартира</string>
+    <string name="saved">СОХРАНЕНО</string>
+    <string name="Regions">Регион</string>
+    <string name="payment">ОПЛАТИТЬ</string>
+    <string name="payment_lower">Платить</string>
+    <string name="full_name">Имя и фамилия</string>
+    <string name="number_phone">Номер телефона</string>
+    <string name="bill_lower">Чек</string>
+    <string name="bonus_money">Бонус</string>
+    <string name="voucher">Ваучерный кошелек</string>
+    <string name="invite_friend">Пригласить друзей</string>
+    <string name="hint">Уведомления</string>
+    <string name="policy_and_secure">Политика и конфиденциальность</string>
+    <string name="logout">Выйти</string>
+    <string name="title">Заголовок</string>
+    <string name="content">Содержание</string>
+
+    <string name="home">Домашняя страница</string>
+    <string name="saved_lower">Избранное</string>
+    <string name="notify_lower">Уведомления</string>
+    <string name="information">Профиль</string>
+</resources>

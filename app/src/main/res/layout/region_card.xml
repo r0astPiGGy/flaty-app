@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:padding="5dp"
+        android:background="@drawable/bg_milktea"
+        android:elevation="5dp"
+        android:orientation="horizontal"
+        tools:ignore="UselessParent">
+
+        <ImageView
+            android:id="@+id/imageRegion"
+            android:contentDescription="@string/content_description_image"
+            android:layout_marginStart="5dp"
+            android:layout_width="120dp"
+            android:layout_height="90dp"
+            android:scaleType="fitXY"
+            android:layout_gravity="center"
+            android:src="@drawable/region1" />
+        <LinearLayout
+            android:layout_marginStart="9dp"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/white" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="1dp"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/tvRegionName_res_cart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:fontFamily="@font/notop_sans_regular"
+                android:textSize="16sp"
+                android:text="@string/banh_mi_co_ba"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/yellow" />
+            <TextView
+                android:id="@+id/tvRegionAddress_res_cart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:fontFamily="@font/notop_sans_regular"
+                android:textStyle="italic"
+                android:text="@string/example_address"
+                android:textColor="@color/white" />
+            <Button
+                android:id="@+id/btnSavedRegion"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/notop_sans_regular"
+                android:background="@color/main_color"
+                android:text="@string/add_to_saved"
+                android:textColor="@color/black"
+                android:textStyle="bold"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
+

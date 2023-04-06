@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="hcmute.edu.vn.phamdinhquochoa.flatyapp.RegisterActivity">
+
+    <ImageView
+        android:contentDescription="@string/app_name"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/logo1" />
+    
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="350sp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_milktea"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dang_ky_uppercase"
+            android:fontFamily="@font/notop_sans_regular"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"/>
+
+        <EditText
+            android:id="@+id/editText_username_signup"
+            android:layout_width="285sp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:autofillHints="emailAddress"
+            android:background="@drawable/bg_edit_text_rounded"
+            android:hint="@string/hint_username"
+            android:inputType="textEmailAddress"
+            android:paddingStart="10dp"
+            android:paddingTop="15dp"
+            android:paddingEnd="0dp"
+            android:paddingBottom="15dp"
+            android:textColorHint="#000000"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/editText_password_signup"
+            android:layout_width="285sp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:autofillHints="password"
+            android:background="@drawable/bg_edit_text_rounded"
+            android:hint="@string/hint_password"
+            android:inputType="textPassword"
+            android:paddingStart="10dp"
+            android:paddingTop="15dp"
+            android:paddingEnd="0dp"
+            android:paddingBottom="15dp"
+            android:textColorHint="#000000"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/editText_password_signup_confirm"
+            android:layout_width="285sp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:autofillHints="password"
+            android:background="@drawable/bg_edit_text_rounded"
+            android:hint="@string/password_confirm_hint"
+            android:inputType="textPassword"
+            android:paddingStart="10dp"
+            android:paddingTop="15dp"
+            android:paddingEnd="0dp"
+            android:paddingBottom="15dp"
+            android:textColorHint="#000000"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/button_signup_signup"
+            android:layout_width="285sp"
+            android:layout_height="wrap_content"
+            android:text="@string/dang_ky"
+            android:layout_gravity="center"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:background="@drawable/size_box_price"
+            android:textColor="@color/black"
+            android:fontFamily="@font/notop_sans_regular"
+            android:layout_marginTop="20dp"
+            android:textSize="18sp"/>
+
+        <Button
+            android:id="@+id/button_login_signup"
+            android:layout_width="285sp"
+            android:layout_height="wrap_content"
+            android:text="@string/dang_nhap"
+            android:layout_gravity="center"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:background="@drawable/bg_noodle"
+            android:textColor="@color/black"
+            android:fontFamily="@font/notop_sans_regular"
+            android:layout_marginTop="20dp"
+            android:textSize="18sp"
+            android:layout_marginBottom="45dp"/>
+    </LinearLayout>
+</LinearLayout>

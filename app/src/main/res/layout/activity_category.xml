@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="hcmute.edu.vn.phamdinhquochoa.flatyapp.CategoryActivity"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/imageCartC"
+            android:contentDescription="@string/app_name"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            android:src="@drawable/bg_white"
+            android:layout_marginTop="20sp"
+            android:layout_marginStart="28sp"/>
+        <ImageView
+            android:contentDescription="@string/app_name"
+            android:layout_width="140sp"
+            android:layout_height="40sp"
+            android:src="@drawable/images"
+            android:layout_marginTop="20sp"
+            android:layout_marginStart="60sp"/>
+
+        <ImageView
+            android:id="@+id/imageSync"
+            android:contentDescription="@string/app_name"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            android:src="@drawable/sync"
+            android:layout_marginTop="20sp"
+            android:layout_marginStart="45sp"/>
+
+    </LinearLayout>
+    <SearchView
+        android:id="@+id/search_bar"
+        android:layout_width="360sp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        android:background="@drawable/bg_search_view"
+        android:elevation="5dp"/>
+
+    <LinearLayout
+        android:id="@+id/admin_editor_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <Button
+            android:id="@+id/button_add_flat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/bg_noodle"
+            android:fontFamily="@font/notop_sans_regular"
+            android:padding="10dp"
+            android:text="@string/add_flat"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5sp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:id="@+id/layout_RegionInformation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <ImageView
+                    android:id="@+id/imageRegion_category"
+                    android:layout_width="300dp"
+                    android:layout_height="225dp"
+                    android:layout_gravity="center"
+                    android:padding="5dp"
+                    android:src="@drawable/region1"
+                    android:contentDescription="@string/content_description_image" />
+                <TextView
+                    android:id="@+id/tvRegionName_category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/notop_sans_regular"
+                    android:textSize="16sp"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:text="@string/quan_pho_gia_truyen" />
+                <TextView
+                    android:id="@+id/tvRegionAddress_category"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/notop_sans_regular"
+                    android:textStyle="italic"
+                    android:text="@string/example_address" />
+                <TextView
+                    android:id="@+id/tvRegionPhone_category"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/notop_sans_regular"
+                    android:text="@string/number_phone" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/FlatCartContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="hcmute.edu.vn.phamdinhquochoa.flatyapp.LoginActivity">
+
+    <ImageView
+        android:contentDescription="@string/app_name"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/logo1" />
+
+    <LinearLayout
+        android:layout_width="350sp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:paddingStart="30dp"
+        android:paddingEnd="30dp"
+        android:background="@drawable/bg_milktea"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/notop_sans_regular"
+            android:text="@string/dang_nhap_uppercase"
+            android:textColor="@color/black"
+            android:textSize="28sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/editText_username_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:autofillHints="name"
+            android:background="@drawable/bg_edit_text_rounded"
+            android:hint="@string/hint_username"
+            android:inputType="text"
+            android:maxLines="1"
+            android:textColorHint="#000000"
+            android:paddingStart="10dp"
+            android:paddingTop="15dp"
+            android:paddingEnd="0sp"
+            android:paddingBottom="15dp"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/editText_password_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:autofillHints="password"
+            android:background="@drawable/bg_edit_text_rounded"
+            android:hint="@string/hint_password"
+            android:inputType="textPassword"
+            android:paddingStart="10dp"
+            android:paddingTop="15dp"
+            android:paddingEnd="0sp"
+            android:paddingBottom="15dp"
+            android:textColorHint="#000000"
+            android:textSize="18sp" />
+
+        <LinearLayout
+            android:layout_marginTop="10sp"
+            android:layout_width="match_parent"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+
+            <CheckBox
+                android:id="@+id/checkbox_is_admin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/black"
+                android:text="@string/prompt_is_admin" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/button_login_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bg_noodle"
+            android:fontFamily="@font/notop_sans_regular"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:text="@string/dang_nhap"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/button_signup_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="30dp"
+            android:background="@drawable/size_box_price"
+            android:fontFamily="@font/notop_sans_regular"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:text="@string/dang_ky"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+    </LinearLayout>
+</LinearLayout>
