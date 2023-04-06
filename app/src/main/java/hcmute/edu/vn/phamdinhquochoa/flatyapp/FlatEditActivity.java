@@ -5,18 +5,14 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
-import java.io.IOException;
-import java.net.URI;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import hcmute.edu.vn.phamdinhquochoa.Flatyapp.R;
 import hcmute.edu.vn.phamdinhquochoa.Flatyapp.databinding.ActivityFlatEditBinding;
 import hcmute.edu.vn.phamdinhquochoa.flatyapp.beans.Flat;
-import hcmute.edu.vn.phamdinhquochoa.flatyapp.dbcontext.DatabaseHandler;
 import hcmute.edu.vn.phamdinhquochoa.flatyapp.utils.ImageUtils;
 
 public class FlatEditActivity extends AppCompatActivity {

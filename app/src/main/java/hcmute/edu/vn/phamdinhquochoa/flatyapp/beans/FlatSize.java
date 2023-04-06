@@ -2,10 +2,12 @@ package hcmute.edu.vn.phamdinhquochoa.flatyapp.beans;
 
 import java.io.Serializable;
 
+@Deprecated
 public class FlatSize implements Serializable {
     private Integer FlatId;
     private Integer size;
     private Double price;
+
 
     public FlatSize() {
     }

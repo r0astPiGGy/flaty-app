@@ -1,32 +1,39 @@
 package hcmute.edu.vn.phamdinhquochoa.flatyapp.beans;
 
+import com.google.firebase.firestore.Exclude;
+
 import java.io.Serializable;
+import java.util.UUID;
+
+import hcmute.edu.vn.phamdinhquochoa.flatyapp.dao.DataAccess;
 
 public class Flat implements Serializable {
 
-    private Integer id;
+    private String id;
     private String name;
     private String type;
     private byte[] image;
     private String description;
-    private Integer RegionId;
+    private String regionId;
 
-    public Flat() {}
+    public Flat() {
+        this(UUID.randomUUID().toString(), "Unnamed", null, null, "No description", null);
+    }
 
-    public Flat(Integer id, String name, String type, byte[] image, String description, Integer RegionId) {
+    public Flat(String id, String name, String type, byte[] image, String description, String RegionId) {
         this.id = id;
         this.name = name;
         this.type = type;
         this.image = image;
         this.description = description;
-        this.RegionId = RegionId;
+        this.regionId = RegionId;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -62,11 +69,26 @@ public class Flat implements Serializable {
         this.description = description;
     }
 
-    public Integer getRegionId() {
-        return RegionId;
+    public String getRegionId() {
+        return regionId;
     }
 
-    public void setRegionId(Integer RegionId) {
-        this.RegionId = RegionId;
+    public void setRegionId(String RegionId) {
+        this.regionId = RegionId;
+    }
+
+    @Exclude
+    private Region cachedRegion;
+
+    public Region getRegionReference() {
+        if(cachedRegion == null) {
+            updateRegionReference();
+        }
+
+        return cachedRegion;
+    }
+
+    public void updateRegionReference() {
+        cachedRegion = DataAccess.getDataService().getRegionData().getRegionByIdBlocking(regionId);
     }
 }

@@ -9,12 +9,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import hcmute.edu.vn.phamdinhquochoa.flatyapp.HomeActivity;
 import hcmute.edu.vn.phamdinhquochoa.Flatyapp.R;
 import hcmute.edu.vn.phamdinhquochoa.flatyapp.beans.Flat;
 import hcmute.edu.vn.phamdinhquochoa.flatyapp.beans.FlatSize;
-import hcmute.edu.vn.phamdinhquochoa.flatyapp.dbcontext.DatabaseHandler;
+import hcmute.edu.vn.phamdinhquochoa.flatyapp.dao.DataAccess;
 import hcmute.edu.vn.phamdinhquochoa.flatyapp.fragments.SavedFragment;
+import hcmute.edu.vn.phamdinhquochoa.flatyapp.utils.ImageUtils;
 
 @SuppressLint("ViewConstructor")
 public class FlatSavedCard extends LinearLayout {
@@ -45,16 +45,20 @@ public class FlatSavedCard extends LinearLayout {
         btnDelete.setOnClickListener(view -> {
             AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
             dialog.setMessage("Вы хотите удалить элемент " + Flat.getName() + " ?");
-            dialog.setPositiveButton("Имеется", (dialogInterface, i) -> {
-                HomeActivity.dao.deleteFlatSavedByFlatIdAndSize(FlatSize.getFlatId(), FlatSize.getSize());
-                SavedFragment.saved_container.removeView(this);
+            dialog.setPositiveButton("Да", (dialogInterface, i) -> {
+                DataAccess.getDataService()
+                        .getFavoriteFlatData()
+                        .removeFavorite(Flat.getId())
+                        .addOnCompleteListener(() -> {
+                            SavedFragment.saved_container.removeView(this);
+                        });
             });
             dialog.setNegativeButton("Нет", (dialogInterface, i) -> {});
             dialog.show();
         });
 
         // Set information for cart card
-        image.setImageBitmap(DatabaseHandler.convertByteArrayToBitmap(Flat.getImage()));
+        image.setImageBitmap(ImageUtils.convertByteArrayToBitmap(Flat.getImage()));
         tvName.setText(Flat.getName());
         switch (FlatSize.getSize()){
             case 1:

@@ -3,23 +3,20 @@ package hcmute.edu.vn.phamdinhquochoa.flatyapp;
 import static hcmute.edu.vn.phamdinhquochoa.flatyapp.FlatEditActivity.FLAT_INTENT_TAG;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.net.Uri;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import hcmute.edu.vn.phamdinhquochoa.Flatyapp.R;
 import hcmute.edu.vn.phamdinhquochoa.Flatyapp.databinding.ActivityFlatDetailsBinding;
 import hcmute.edu.vn.phamdinhquochoa.flatyapp.beans.*;
-import hcmute.edu.vn.phamdinhquochoa.flatyapp.dao.DAO;
-import hcmute.edu.vn.phamdinhquochoa.flatyapp.dbcontext.DatabaseHandler;
+import hcmute.edu.vn.phamdinhquochoa.flatyapp.dao.DataAccess;
 import hcmute.edu.vn.phamdinhquochoa.flatyapp.utils.ImageUtils;
 
 public class FlatDetailsActivity extends AppCompatActivity {
@@ -28,12 +25,10 @@ public class FlatDetailsActivity extends AppCompatActivity {
 
     private static final int FLAT_EDIT_REQUEST = 123;
 
-    public static Integer userID;
     private static int quantity;
     public static FlatSize FlatSize;
 
     private Flat flat;
-    private DAO dao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +40,7 @@ public class FlatDetailsActivity extends AppCompatActivity {
         quantity = 1;
 
         referenceComponent();
-        dao = new DAO(this);
-        LoadData();
+        loadData();
     }
 
     private String getRoundPrice(Double price){
@@ -63,14 +57,7 @@ public class FlatDetailsActivity extends AppCompatActivity {
         tvQuantity = findViewById(R.id.tvFlatQuantity_Flat);
 
         Button btnSavedFlat = findViewById(R.id.btnSavedFlat);
-        btnSavedFlat.setOnClickListener(view -> {
-            boolean addFlatSaved = dao.addFlatSaved(new FlatSaved(FlatSize.getFlatId(), FlatSize.getSize(), userID));
-            if(addFlatSaved){
-                Toast.makeText(this, "Информация о квартире сохранена!", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(this, "При сохранении квартиры произошла ошибка", Toast.LENGTH_SHORT).show();
-            }
-        });
+        btnSavedFlat.setOnClickListener(view -> onFavoriteButtonClicked());
 
         Button btnAddQuantity = findViewById(R.id.btnAddQuantity_Flat);
         btnAddQuantity.setOnClickListener(view -> {
@@ -88,12 +75,25 @@ public class FlatDetailsActivity extends AppCompatActivity {
             }
         });
 
-        if(!HomeActivity.user.isAdmin()) return;
+        if(!DataAccess.getUser().isAdmin()) return;
 
         binding.adminEditorBar.setVisibility(View.VISIBLE);
 
         binding.buttonEditFlat.setOnClickListener(v -> onEditButtonClicked());
         binding.buttonDeleteFlat.setOnClickListener(v -> onDeleteButtonClicked());
+    }
+
+    private void onFavoriteButtonClicked() {
+        DataAccess.getDataService()
+                .getFavoriteFlatData()
+                .addFavorite(flat.getId())
+                .addOnCompleteListener(() -> {
+                    Toast.makeText(this, "Информация о квартире сохранена!", Toast.LENGTH_SHORT).show();
+                })
+                .addOnFailureListener(e -> {
+                    e.printStackTrace();
+                    Toast.makeText(this, "При сохранении квартиры произошла ошибка", Toast.LENGTH_SHORT).show();
+                });
     }
 
     private void onEditButtonClicked() {
@@ -113,8 +113,8 @@ public class FlatDetailsActivity extends AppCompatActivity {
 
         if(requestCode == FLAT_EDIT_REQUEST && data != null) {
             flat = (Flat) data.getSerializableExtra(FLAT_INTENT_TAG);
+            DataAccess.getDataService().getFlatData().updateFlat(flat);
             updateFlatInfo();
-            dao.updateFlat(flat);
         }
     }
 
@@ -123,9 +123,18 @@ public class FlatDetailsActivity extends AppCompatActivity {
     }
 
     private void onDeleteButtonClicked() {
-        dao.deleteFlatById(flat.getId());
+        DataAccess.getDataService()
+                .getFlatData()
+                .deleteFlatById(flat.getId())
+                .addOnCompleteListener(this::onFlatDeleted);
+    }
 
-        finishActivityAndUpdateFlats();
+    private void onFlatDeleted() {
+        sync(this::finishActivityAndUpdateFlats);
+    }
+
+    private void sync(Runnable task) {
+        new Handler().post(task);
     }
 
     private void finishActivityAndUpdateFlats() {
@@ -133,13 +142,7 @@ public class FlatDetailsActivity extends AppCompatActivity {
         finish();
     }
 
-    private void SetPriceDefault(Double price){
-        tvPrice.setText(getRoundPrice(price));
-        quantity = 1;
-        tvQuantity.setText("1");
-    }
-
-    private void LoadData(){
+    private void loadData(){
         Intent intent = getIntent();
 
         if (intent == null) {
@@ -156,9 +159,9 @@ public class FlatDetailsActivity extends AppCompatActivity {
         binding.tvDescription.setText(flat.getDescription());
         binding.image.setImageBitmap(ImageUtils.convertByteArrayToBitmap(flat.getImage()));
 
-        Region Region = dao.getRegionInformation(flat.getRegionId());
-        binding.tvRegionName.setText(String.format("Название региона \n%s", Region.getName()));
-        binding.tvRegionAddress.setText(String.format("Адрес \n%s", Region.getAddress()));
+        Region region = flat.getRegionReference();
+        binding.tvRegionName.setText(String.format("Название региона \n%s", region.getName()));
+        binding.tvRegionAddress.setText(String.format("Адрес \n%s", region.getAddress()));
 
         tvPrice.setText(getRoundPrice(FlatSize.getPrice()));
     }

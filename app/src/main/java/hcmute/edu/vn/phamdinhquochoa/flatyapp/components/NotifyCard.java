@@ -33,7 +33,7 @@ public class NotifyCard extends LinearLayout {
         //Set text
         tvTitle.setText(notify.getTitle());
         tvContent.setText(notify.getContent());
-        tvDateMake.setText(notify.getDateMake());
+        tvDateMake.setText(notify.getDateMake().toString());
 
     }
 }

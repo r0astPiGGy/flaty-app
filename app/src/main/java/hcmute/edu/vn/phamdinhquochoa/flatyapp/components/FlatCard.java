@@ -9,7 +9,7 @@ import android.widget.TextView;
 import hcmute.edu.vn.phamdinhquochoa.Flatyapp.R;
 
 import hcmute.edu.vn.phamdinhquochoa.flatyapp.beans.Flat;
-import hcmute.edu.vn.phamdinhquochoa.flatyapp.dbcontext.DatabaseHandler;
+import hcmute.edu.vn.phamdinhquochoa.flatyapp.utils.ImageUtils;
 
 public class FlatCard extends LinearLayout {
     private Flat Flat;
@@ -39,7 +39,7 @@ public class FlatCard extends LinearLayout {
         TextView tvRegionName = findViewById(R.id.tvFlatRegionName);
 
         // Set information for Flat cart
-        image.setImageBitmap(DatabaseHandler.convertByteArrayToBitmap(Flat.getImage()));
+        image.setImageBitmap(ImageUtils.convertByteArrayToBitmap(Flat.getImage()));
         tvName.setText(Flat.getName());
         tvPrice.setText(String.format("%s руб", Math.round(defaultPrice)));
         tvRegionName.setText(RegionName);

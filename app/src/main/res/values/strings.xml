@@ -125,7 +125,7 @@
     <string name="title">Заголовок</string>
     <string name="content">Содержание</string>
 
-    <string name="home">Домашняя страница</string>
+    <string name="home">Главная</string>
     <string name="saved_lower">Избранное</string>
     <string name="notify_lower">Уведомления</string>
     <string name="information">Профиль</string>

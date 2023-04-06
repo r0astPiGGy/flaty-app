@@ -2,90 +2,80 @@ package hcmute.edu.vn.phamdinhquochoa.flatyapp;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Objects;
 
 import hcmute.edu.vn.phamdinhquochoa.Flatyapp.R;
+import hcmute.edu.vn.phamdinhquochoa.Flatyapp.databinding.ActivityUserInformationBinding;
 import hcmute.edu.vn.phamdinhquochoa.flatyapp.beans.Notify;
-import hcmute.edu.vn.phamdinhquochoa.flatyapp.beans.NotifyToUser;
 import hcmute.edu.vn.phamdinhquochoa.flatyapp.beans.User;
-import hcmute.edu.vn.phamdinhquochoa.flatyapp.dao.DAO;
+import hcmute.edu.vn.phamdinhquochoa.flatyapp.dao.DataAccess;
 
 public class UserInformationActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    private EditText edUser_name, edUser_phone, edUser_DoB, edUser_password;
-    private Spinner spUser_gender;
+    private ActivityUserInformationBinding binding;
     private Calendar calendar;
     private String newUser_name, newUser_phone, newUser_DoB, newUser_gender, newUser_password;
-    private DAO dao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_information);
+        binding = ActivityUserInformationBinding.inflate(getLayoutInflater());
+
+        setContentView(binding.getRoot());
 
         referencesComponent();
 
-        User user = HomeActivity.user;
+        User user = DataAccess.getUser();
 
-        edUser_name.setText(user.getName());
-        edUser_phone.setText(user.getPhone());
-        edUser_DoB.setText(user.getDateOfBirth());
-        edUser_password.setText(user.getPassword());
+        binding.editTextUserName.setText(user.getName());
+        binding.editTextUserPhone.setText(user.getPhone());
+        binding.userBirthdayPick.setText(user.getDateOfBirth());
+        binding.editTextUserPassword.setText(user.getPassword());
 
-        switch (HomeActivity.user.getGender()){
-            case "Male":
-                spUser_gender.setSelection(0);
-                break;
-            case "Female":
-                spUser_gender.setSelection(1);
-                break;
-            default:
-                spUser_gender.setSelection(2);
-                break;
+        int selection = 2;
+
+        switch (user.getGender()){
+            case "Male": selection = 0; break;
+            case "Female": selection = 1; break;
         }
 
-        dao = new DAO(this);
+        binding.spinnerUserGender.setSelection(selection);
     }
 
     private void referencesComponent(){
-        edUser_name = findViewById(R.id.editText_user_name);
-        edUser_phone = findViewById(R.id.editText_user_phone);
-        edUser_DoB = findViewById(R.id.user_birthday_pick);
-        edUser_DoB.setOnClickListener(view -> PickDate());
+        binding.userBirthdayPick.setOnClickListener(view -> PickDate());
 
-        edUser_password = findViewById(R.id.editText_user_password);
-
-        spUser_gender = findViewById(R.id.spinner_user_gender);
-        ArrayAdapter<CharSequence> genders = ArrayAdapter.createFromResource(this, R.array.genders, android.support.design.R.layout.support_simple_spinner_dropdown_item);
-        genders.setDropDownViewResource(android.support.design.R.layout.support_simple_spinner_dropdown_item);
+        Spinner spUser_gender = binding.spinnerUserGender;
+        ArrayAdapter<CharSequence> genders = ArrayAdapter.createFromResource(
+                this,
+                R.array.genders,
+                androidx.appcompat.R.layout.support_simple_spinner_dropdown_item
+        );
+        genders.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
         spUser_gender.setAdapter(genders);
         spUser_gender.setOnItemSelectedListener(this);
 
-        Button btnChange = findViewById(R.id.btnChangeUserInformation);
-        btnChange.setOnClickListener(view -> onChangeButtonClicked());
-
-        Button btnCancel = findViewById(R.id.btnCancelChangeUserInformation);
-        btnCancel.setOnClickListener(view -> finish());
+        binding.btnChangeUserInformation.setOnClickListener(view -> onChangeButtonClicked());
+        binding.btnCancelChangeUserInformation.setOnClickListener(view -> finish());
     }
 
     private void fillUserInput() {
-        newUser_name = edUser_name.getText().toString().trim();
-        newUser_gender = spUser_gender.getSelectedItem().toString();
-        newUser_phone = edUser_phone.getText().toString().trim();
-        newUser_DoB = edUser_DoB.getText().toString();
-        newUser_password = edUser_password.getText().toString();
+        newUser_name = binding.editTextUserName.getText().toString().trim();
+        newUser_gender = binding.spinnerUserGender.getSelectedItem().toString();
+        newUser_phone = binding.editTextUserPhone.getText().toString().trim();
+        newUser_DoB = binding.userBirthdayPick.getText().toString();
+        newUser_password = binding.editTextUserPassword.getText().toString();
     }
 
     private boolean isUserInputEmpty() {
@@ -100,8 +90,12 @@ public class UserInformationActivity extends AppCompatActivity implements Adapte
             return;
         }
 
-        String oldPassword = HomeActivity.user.getPassword();
-        User editUser = HomeActivity.user.copyAndApply(newUser -> {
+        User user = DataAccess.getUser();
+
+        Objects.requireNonNull(user, "User cannot be null!");
+
+        String oldPassword = user.getPassword();
+        User editUser = user.copyAndApply(newUser -> {
             newUser.setName(newUser_name);
             newUser.setGender(newUser_gender);
             newUser.setDateOfBirth(newUser_DoB);
@@ -109,20 +103,24 @@ public class UserInformationActivity extends AppCompatActivity implements Adapte
             newUser.setPassword(newUser_password);
         });
 
-        dao.updateUser(editUser);
+        DataAccess.getDataService().getUserData().updateUser(editUser);
 
         if(!oldPassword.equals(newUser_password)){
+            DataAccess.getDataService().getAuthData().changePassword(newUser_password);
             Toast.makeText(this, "Пожалуйста, войдите снова!", Toast.LENGTH_SHORT).show();
-            // Make notify
-            dao.addNotify(new Notify(1, "Пароль изменен!",
+
+            Notify notify = new Notify(
+                    "Пароль изменен!",
                     "Пожалуйста, повторно войдите в приложение, чтобы обновить новую личную информацию!",
-                    dao.getDate()));
-            dao.addNotifyToUser(new NotifyToUser(dao.getNewestNotifyId(), dao.getNewestUserId()));
+                    user.getId()
+            );
+
+            DataAccess.getDataService().getNotificationData().addNotify(notify);
         } else {
             Toast.makeText(this, "Информация успешно изменена!", Toast.LENGTH_SHORT).show();
         }
+        DataAccess.getDataService().getAuthData().setUser(editUser);
 
-        HomeActivity.user = editUser;
         finish();
     }
 
@@ -132,7 +130,7 @@ public class UserInformationActivity extends AppCompatActivity implements Adapte
             calendar.set(year, month, day);
             @SuppressLint("SimpleDateFormat")
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-            edUser_DoB.setText(dateFormat.format(calendar.getTime()));
+            binding.userBirthdayPick.setText(dateFormat.format(calendar.getTime()));
         }, calendar.get(Calendar.YEAR),
                 calendar.get(Calendar.MONTH),
                 calendar.get(Calendar.DAY_OF_MONTH));
@@ -141,11 +139,11 @@ public class UserInformationActivity extends AppCompatActivity implements Adapte
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        spUser_gender.setTextAlignment(i);
+        binding.spinnerUserGender.setTextAlignment(i);
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
-        spUser_gender.setTransitionName(HomeActivity.user.getGender());
+        binding.spinnerUserGender.setTransitionName(DataAccess.getUser().getGender());
     }
 }

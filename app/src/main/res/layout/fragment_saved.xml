@@ -6,7 +6,6 @@
     tools:context="hcmute.edu.vn.phamdinhquochoa.flatyapp.fragments.SavedFragment"
     android:orientation="vertical">
 
-    <!-- TODO: Update blank fragment layout -->
     <LinearLayout
         android:layout_width="360sp"
         android:layout_height="87sp"

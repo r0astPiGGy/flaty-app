@@ -8,63 +8,27 @@
 
     <LinearLayout
         android:layout_width="360sp"
-        android:layout_height="87sp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:orientation="vertical"
         android:layout_marginTop="10dp"
+        android:background="@drawable/bg_function"
         android:elevation="10dp"
-        android:background="@drawable/bg_function">
+        android:orientation="vertical">
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:orientation="vertical"
             android:layout_height="47sp"
-            android:background="@color/teal_700">
+            android:background="@color/teal_700"
+            android:orientation="vertical">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="@string/notify"
-                android:textColor="@color/black"
+                android:layout_gravity="center"
                 android:fontFamily="@font/notop_sans_regular"
-                android:layout_gravity="center"
-                android:gravity="center"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40sp"
-            android:orientation="horizontal">
-            <LinearLayout
-                android:id="@+id/btn_notify_apps"
-                android:layout_width="180sp"
-                android:layout_height="40sp"
-                android:layout_gravity="center"
-                android:orientation="vertical"
-                android:background="@color/teal_700">
-                <TextView
-                    android:id="@+id/tv_notify_apps"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="@string/apps"
-                    android:textColor="@color/black"
-                    android:fontFamily="@font/notop_sans_regular"
-                    android:layout_gravity="center"
-                    android:gravity="center"/>
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/btn_notify_user"
-                android:layout_width="180sp"
-                android:layout_height="40sp"
-                android:layout_gravity="center"
-                android:orientation="vertical">
-                <TextView
-                    android:id="@+id/tv_notify_user"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="@string/my"
-                    android:textColor="@color/black"
-                    android:fontFamily="@font/notop_sans_regular"
-                    android:layout_gravity="center"
-                    android:gravity="center"/>
-            </LinearLayout>
+                android:gravity="center"
+                android:text="@string/notify"
+                android:textColor="@color/black" />
         </LinearLayout>
     </LinearLayout>
 

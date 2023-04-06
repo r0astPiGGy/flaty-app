@@ -2,8 +2,6 @@ package hcmute.edu.vn.phamdinhquochoa.flatyapp.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,13 +10,18 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+
 import java.util.ArrayList;
+import java.util.List;
 
 import hcmute.edu.vn.phamdinhquochoa.flatyapp.CategoryActivity;
 import hcmute.edu.vn.phamdinhquochoa.flatyapp.HomeActivity;
 import hcmute.edu.vn.phamdinhquochoa.Flatyapp.R;
 import hcmute.edu.vn.phamdinhquochoa.flatyapp.beans.Region;
 import hcmute.edu.vn.phamdinhquochoa.flatyapp.components.RegionCard;
+import hcmute.edu.vn.phamdinhquochoa.flatyapp.dao.DataAccess;
 
 public class HomeFragment extends Fragment {
     private Intent intent;
@@ -42,22 +45,24 @@ public class HomeFragment extends Fragment {
         return mainView;
     }
 
-    private void lazyInit() {
+    private void onRegionsLoaded(List<Region> regionList) {
         LinearLayout layout_container = mainView.findViewById(R.id.layout_container_Region);
-
-        ArrayList<Region> RegionArrayList = HomeActivity.dao.getRegionList();
-
         layout_container.removeAllViews();
-        for(Region Region : RegionArrayList){
-            RegionCard card = new RegionCard(getContext(), Region, false);
-            card.setOnClickListener(view->{
+        for(Region region : regionList){
+            RegionCard card = new RegionCard(getContext(), region, false);
+            card.setOnClickListener(view -> {
                 intent = new Intent(getActivity(), CategoryActivity.class);
-                intent.putExtra("RegionId", Region.getId());
+                // TODO: put serializable
+                intent.putExtra("RegionId", region.getId());
                 startActivity(intent);
             });
 
             layout_container.addView(card);
         }
+    }
+
+    private void lazyInit() {
+        DataAccess.getDataService().getRegionData().getAllRegions().observe(this, this::onRegionsLoaded);
 
         ImageView imageCart = mainView.findViewById(R.id.imageCart);
         imageCart.setOnClickListener(view -> {
@@ -85,7 +90,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void updateButton() {
-        boolean isAdmin = HomeActivity.user.isAdmin();
+        boolean isAdmin = DataAccess.getUser().isAdmin();
 
         if(isAdmin) {
             addRegionButton.setVisibility(View.VISIBLE);

@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.function.Consumer;
 
 public class User implements Serializable {
-    private Integer id;
+    private String id;
     private String name;
     private String gender;
     private String dateOfBirth;
@@ -13,15 +13,17 @@ public class User implements Serializable {
     private String password;
     private Role role;
 
-    public User(Integer id, String name, String gender, String dateOfBirth, String phone, String username, String password) {
+    public User() {}
+
+    public User(String id, String name, String gender, String dateOfBirth, String phone, String username, String password) {
         this(id, name, gender, dateOfBirth, phone, username, password, Role.USER);
     }
 
-    public User(Integer id, String name, String gender, String dateOfBirth, String phone, String username, String password, String role) {
+    public User(String id, String name, String gender, String dateOfBirth, String phone, String username, String password, String role) {
         this(id, name, gender, dateOfBirth, phone, username, password, Role.valueOf(role));
     }
 
-    public User(Integer id, String name, String gender, String dateOfBirth, String phone, String username, String password, Role role) {
+    public User(String id, String name, String gender, String dateOfBirth, String phone, String username, String password, Role role) {
         this.id = id;
         this.name = name;
         this.gender = gender;
@@ -40,11 +42,11 @@ public class User implements Serializable {
         return newUser;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

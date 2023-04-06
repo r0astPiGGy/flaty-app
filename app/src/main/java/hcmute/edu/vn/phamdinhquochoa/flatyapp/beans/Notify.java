@@ -1,26 +1,44 @@
 package hcmute.edu.vn.phamdinhquochoa.flatyapp.beans;
 
 import java.io.Serializable;
+import java.util.Date;
+import java.util.UUID;
 
 public class Notify implements Serializable {
-    private Integer id;
+    private String id;
     private String title;
     private String content;
-    private String dateMake;
+    private String userId;
+    private Date dateMake;
 
-    public Notify(Integer id, String title, String content, String dateMake) {
+    public Notify() {}
+
+    public Notify(String title, String content, String userId) {
+        this(title, content, new Date(), userId);
+    }
+
+    public Notify(String title, String content, Date dateMake, String userId) {
+        this(UUID.randomUUID().toString(), title, content, userId, dateMake);
+    }
+
+    public Notify(String id, String title, String content, String userId, Date dateMake) {
         this.id = id;
         this.title = title;
         this.content = content;
+        this.userId = userId;
         this.dateMake = dateMake;
     }
 
-    public Integer getId() {
-        return id;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public String getUserId() {
+        return userId;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getTitle() {
@@ -39,11 +57,7 @@ public class Notify implements Serializable {
         this.content = content;
     }
 
-    public String getDateMake() {
+    public Date getDateMake() {
         return dateMake;
-    }
-
-    public void setDateMake(String dateMake) {
-        this.dateMake = dateMake;
     }
 }

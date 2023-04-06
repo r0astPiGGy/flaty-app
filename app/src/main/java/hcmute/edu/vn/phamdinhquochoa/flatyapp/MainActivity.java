@@ -1,9 +1,12 @@
 package hcmute.edu.vn.phamdinhquochoa.flatyapp;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import hcmute.edu.vn.phamdinhquochoa.Flatyapp.R;
+import hcmute.edu.vn.phamdinhquochoa.flatyapp.dao.DataAccess;
+import hcmute.edu.vn.phamdinhquochoa.flatyapp.data.firebase.FirebaseDataService;
 
 public class MainActivity extends AppCompatActivity {
 

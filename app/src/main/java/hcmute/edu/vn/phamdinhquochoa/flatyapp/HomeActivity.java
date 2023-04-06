@@ -4,30 +4,27 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import hcmute.edu.vn.phamdinhquochoa.Flatyapp.R;
-import hcmute.edu.vn.phamdinhquochoa.flatyapp.beans.User;
-import hcmute.edu.vn.phamdinhquochoa.flatyapp.dao.DAO;
 import hcmute.edu.vn.phamdinhquochoa.flatyapp.fragments.*;
 
 public class HomeActivity extends AppCompatActivity {
 
     private static int clickToLogout;
     private static int stackLayout = 0;
-    public static DAO dao;
-    public static User user;
-    private Fragment homeFragment, savedFragment, chatFragment, notifyFragment, profileFragment;
+    private Fragment homeFragment, savedFragment, notifyFragment, profileFragment;
     private BottomNavigationView navigation;
 
     private void referenceFragment(){
         homeFragment = new HomeFragment();
         savedFragment = new SavedFragment();
-//        chatFragment = new ChatFragment();
         notifyFragment = new NotifyFragment();
         profileFragment = new ProfileFragment();
     }
@@ -36,12 +33,6 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        dao = new DAO(this);
-
-        Integer userID = user.getId();
-
-        FlatDetailsActivity.userID = userID;
-//        ViewOrderActivity.userID = userID;
 
         stackLayout++;
         clickToLogout = 0;
@@ -58,9 +49,6 @@ public class HomeActivity extends AppCompatActivity {
                 case "history":
                 case "check":
                 case "payment":
-//                case "cart":
-//                    loadFragment(chatFragment, 2);
-//                    break;
                 case "hint":
                     loadFragment(notifyFragment, 3);
                     break;
@@ -113,9 +101,6 @@ public class HomeActivity extends AppCompatActivity {
                     case R.id.navigation_saved:
                         loadFragment(savedFragment, 1);
                         return true;
-                    case R.id.navigation_chat:
-                        loadFragment(chatFragment, 4);
-                        return true;
                     case R.id.navigation_notify:
                         loadFragment(notifyFragment, 3);
                         return true;
@@ -130,10 +115,9 @@ public class HomeActivity extends AppCompatActivity {
         navigation.getMenu().getItem(indexItem).setChecked(true);
 
         // load fragment
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_container, fragment);
-//        transaction.addToBackStack(null);
-        transaction.setTransition(FragmentTransaction.TRANSIT_NONE);
-        transaction.commit();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.frame_container, fragment)
+                .setTransition(FragmentTransaction.TRANSIT_NONE)
+                .commit();
     }
 }
