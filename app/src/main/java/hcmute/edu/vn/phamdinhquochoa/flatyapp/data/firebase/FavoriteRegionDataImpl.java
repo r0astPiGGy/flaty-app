@@ -56,18 +56,16 @@ public class FavoriteRegionDataImpl extends FirebaseDataContext implements Favor
     }
 
     @Override
-    public LiveData<List<Region>> getFavoriteRegions() {
-        MutableLiveData<List<Region>> regions = new MutableLiveData<>();
+    public LiveData<List<FavoriteRegion>> getFavoriteRegions() {
+        MutableLiveData<List<FavoriteRegion>> regions = new MutableLiveData<>();
         db().collection(K.Collections.FAVORITE_REGIONS)
                 .whereEqualTo("userId", getUserId())
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
-                    RegionData regionData = DataAccess.getDataService().getRegionData();
-                    List<Region> region = queryDocumentSnapshots
+                    List<FavoriteRegion> region = queryDocumentSnapshots
                             .getDocuments()
                             .stream()
                             .map(d -> d.toObject(FavoriteRegion.class))
-                            .map(regionData::convertFavorite)
                             .collect(Collectors.toList());
 
                     regions.postValue(region);

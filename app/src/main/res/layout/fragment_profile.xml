@@ -212,14 +212,15 @@
             android:id="@+id/account_btn_layout_hint"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/bg_function_profile"
             android:orientation="horizontal"
-            android:background="@drawable/bg_function_profile">
+            android:visibility="gone">
 
             <ImageView
-                android:contentDescription="@string/content_description_image"
                 android:layout_width="28dp"
                 android:layout_height="match_parent"
                 android:layout_marginStart="10dp"
+                android:contentDescription="@string/content_description_image"
                 android:src="@drawable/note_icon" />
 
             <TextView

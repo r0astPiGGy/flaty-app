@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
+import hcmute.edu.vn.phamdinhquochoa.flatyapp.beans.FavoriteFlat;
 import hcmute.edu.vn.phamdinhquochoa.flatyapp.beans.Flat;
 
 public interface FavoriteFlatData {
@@ -12,6 +13,6 @@ public interface FavoriteFlatData {
 
     DataTask removeFavorite(String id);
 
-    LiveData<List<Flat>> getFavoriteFlats();
+    LiveData<List<FavoriteFlat>> getFavoriteFlats();
 
 }

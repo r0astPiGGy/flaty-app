@@ -9,12 +9,14 @@ import hcmute.edu.vn.phamdinhquochoa.flatyapp.beans.FavoriteRegion;
 
 public interface RegionData {
 
+    DataTask addRegion(Region region);
+
+    DataTask updateRegion(Region region);
+
     LiveData<Region> getRegionById(String id);
 
-    Region getRegionByIdBlocking(String id);
+    LiveData<List<Region>> getRegionsByIds(List<String> ids);
 
     LiveData<List<Region>> getAllRegions();
-
-    Region convertFavorite(FavoriteRegion favoriteRegion);
 
 }

@@ -4,6 +4,9 @@ import com.google.firebase.firestore.Exclude;
 
 import java.io.Serializable;
 import java.util.UUID;
+import java.util.function.Consumer;
+
+import javax.annotation.Nullable;
 
 import hcmute.edu.vn.phamdinhquochoa.flatyapp.dao.DataAccess;
 
@@ -12,6 +15,7 @@ public class Flat implements Serializable {
     private String id;
     private String name;
     private String type;
+    @Exclude
     private byte[] image;
     private String description;
     private String regionId;
@@ -53,6 +57,8 @@ public class Flat implements Serializable {
         this.type = type;
     }
 
+    @Nullable
+    @Exclude
     public byte[] getImage() {
         return image;
     }
@@ -78,17 +84,15 @@ public class Flat implements Serializable {
     }
 
     @Exclude
-    private Region cachedRegion;
-
-    public Region getRegionReference() {
-        if(cachedRegion == null) {
-            updateRegionReference();
-        }
-
-        return cachedRegion;
+    public Flat copy() {
+        return new Flat(id, name, type, image, description, regionId);
     }
 
-    public void updateRegionReference() {
-        cachedRegion = DataAccess.getDataService().getRegionData().getRegionByIdBlocking(regionId);
+    @Exclude
+    public Flat copyAndApply(Consumer<Flat> copyConsumer) {
+        Flat copy = copy();
+
+        copyConsumer.accept(copy);
+        return copy;
     }
 }

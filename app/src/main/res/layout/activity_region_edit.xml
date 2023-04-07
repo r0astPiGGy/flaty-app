@@ -5,22 +5,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="hcmute.edu.vn.phamdinhquochoa.flatyapp.FlatEditActivity">
+    tools:context="hcmute.edu.vn.phamdinhquochoa.flatyapp.RegionEditActivity">
 
     <TextView
-        android:id="@+id/flat_edit_title"
+        android:id="@+id/region_edit_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
         android:padding="9dp"
-        android:text="@string/activity_flat_edit_text_edit"
+        android:text="@string/activity_region_edit_text_edit"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -28,7 +29,7 @@
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/flat_edit_title">
+        app:layout_constraintTop_toBottomOf="@id/region_edit_title">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -55,7 +56,7 @@
                 android:fontFamily="@font/notop_sans_regular"
                 android:minWidth="280dp"
                 android:padding="10dp"
-                android:text="@string/choose_flat_image"
+                android:text="@string/choose_region_image"
                 android:textColor="@color/black"
                 android:textSize="15sp" />
 
@@ -66,10 +67,28 @@
                 android:layout_marginBottom="10dp">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/editText_flat_name"
+                    android:id="@+id/editText_region_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/flat_name"
+                    android:hint="@string/region_name"
+                    android:imeOptions="actionDone"
+                    android:inputType="text"
+                    android:singleLine="true" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editText_region_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/region_address"
                     android:imeOptions="actionDone"
                     android:inputType="text"
                     android:singleLine="true" />
@@ -83,12 +102,12 @@
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/editText_flat_description"
+                    android:id="@+id/editText_region_phone_number"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/flat_description"
+                    android:hint="@string/region_phone"
                     android:imeOptions="actionDone"
-                    android:inputType="text"
+                    android:inputType="phone"
                     android:singleLine="true" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -113,7 +132,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <Button
-            android:id="@+id/button_add_flat"
+            android:id="@+id/button_add_region"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -121,19 +140,19 @@
             android:fontFamily="@font/notop_sans_regular"
             android:minWidth="150dp"
             android:padding="10dp"
-            android:text="@string/save_flat"
+            android:text="@string/save_region"
             android:textColor="@color/black"
             android:textSize="15sp" />
 
         <Button
-            android:id="@+id/button_cancel_flat"
+            android:id="@+id/button_cancel_region"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:fontFamily="@font/notop_sans_regular"
             android:minWidth="150dp"
             android:padding="10dp"
-            android:text="@string/cancel_flat"
+            android:text="@string/cancel_region"
             android:textColor="@color/black"
             android:textSize="15sp" />
     </LinearLayout>

@@ -26,6 +26,9 @@
             android:name="hcmute.edu.vn.phamdinhquochoa.flatyapp.FlatEditActivity"
             android:exported="false" />
         <activity
+            android:name="hcmute.edu.vn.phamdinhquochoa.flatyapp.RegionEditActivity"
+            android:exported="false" />
+        <activity
             android:name="hcmute.edu.vn.phamdinhquochoa.flatyapp.LoginActivity"
             android:exported="true">
             <intent-filter>

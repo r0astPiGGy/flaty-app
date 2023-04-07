@@ -7,8 +7,18 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
+
+import javax.annotation.Nullable;
 
 import hcmute.edu.vn.phamdinhquochoa.flatyapp.K;
 import hcmute.edu.vn.phamdinhquochoa.flatyapp.beans.FavoriteFlat;
@@ -54,21 +64,19 @@ public class FavoriteFlatDataImpl extends FirebaseDataContext implements Favorit
     }
 
     @Override
-    public LiveData<List<Flat>> getFavoriteFlats() {
-        MutableLiveData<List<Flat>> mutableLiveData = new MutableLiveData<>();
+    public LiveData<List<FavoriteFlat>> getFavoriteFlats() {
+        MutableLiveData<List<FavoriteFlat>> mutableLiveData = new MutableLiveData<>();
 
         db().collection(K.Collections.FAVORITE_FLATS)
                 .whereEqualTo("userId", getUserId())
-                .get().addOnSuccessListener(t -> {
-                    FlatData flatData = DataAccess.getDataService().getFlatData();
-
-                    List<Flat> flats = t.getDocuments().stream()
+                .get()
+                .addOnSuccessListener(t -> {
+                    List<FavoriteFlat> flats = t.getDocuments().stream()
                             .map(d -> d.toObject(FavoriteFlat.class))
-                            .map(flatData::convertFavorite)
                             .collect(Collectors.toList());
 
                     mutableLiveData.postValue(flats);
-                });
+                }).addOnFailureListener(Throwable::printStackTrace);
 
         return mutableLiveData;
     }

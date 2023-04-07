@@ -4,6 +4,7 @@ import static hcmute.edu.vn.phamdinhquochoa.flatyapp.FlatEditActivity.FLAT_INTEN
 
 import android.content.Intent;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -21,7 +22,7 @@ import hcmute.edu.vn.phamdinhquochoa.Flatyapp.databinding.ActivityCategoryBindin
 import hcmute.edu.vn.phamdinhquochoa.flatyapp.beans.Flat;
 import hcmute.edu.vn.phamdinhquochoa.flatyapp.beans.FlatSize;
 import hcmute.edu.vn.phamdinhquochoa.flatyapp.beans.Region;
-import hcmute.edu.vn.phamdinhquochoa.flatyapp.components.FlatCard;
+import hcmute.edu.vn.phamdinhquochoa.flatyapp.view.FlatCard;
 import hcmute.edu.vn.phamdinhquochoa.flatyapp.dao.DataAccess;
 import hcmute.edu.vn.phamdinhquochoa.flatyapp.utils.ImageUtils;
 
@@ -91,10 +92,29 @@ public class CategoryActivity extends AppCompatActivity {
     }
 
     private void updateRegionInfo() {
-        binding.imageRegionCategory.setImageBitmap(ImageUtils.convertByteArrayToBitmap(region.getImage()));
+        updateRegionImage();
         binding.tvRegionNameCategory.setText(region.getName());
         binding.tvRegionPhoneCategory.setText(String.format("Адрес: %s", region.getAddress()));
         binding.tvRegionAddressCategory.setText(String.format("Телефон: %s", region.getPhone()));
+    }
+
+    private void updateRegionImage() {
+        byte[] image = region.getImage();
+
+        if(image == null) {
+            DataAccess.getDataService().getImageStorage()
+                    .getImageByUri(region.getId())
+                    .observe(this, this::updateRegionImage);
+            return;
+        }
+
+        updateRegionImage(image);
+    }
+
+    private void updateRegionImage(byte[] image) {
+        region.setImage(image);
+        Bitmap bitmap = ImageUtils.convertByteArrayToBitmap(image);
+        binding.imageRegionCategory.setImageBitmap(bitmap);
     }
 
     private void onFlatAddClicked() {
@@ -113,20 +133,20 @@ public class CategoryActivity extends AppCompatActivity {
     }
 
     private void updateFlatData() {
-        String regionId = intent_get_data.getStringExtra("RegionId");
-
-        if (regionId == null){
-            String FlatKeyword = intent_get_data.getStringExtra("nameFlat");
-            DataAccess.getDataService()
-                    .getFlatData()
-                    .getFlatsByKeyWord(FlatKeyword)
-                    .observe(this, this::onFlatsLoaded);
-            return;
-        }
+//        String regionId = intent_get_data.getStringExtra("RegionId");
+//
+//        if (regionId == null){
+//            String FlatKeyword = intent_get_data.getStringExtra("nameFlat");
+//            DataAccess.getDataService()
+//                    .getFlatData()
+//                    .getFlatsByKeyWord(FlatKeyword)
+//                    .observe(this, this::onFlatsLoaded);
+//            return;
+//        }
 
         DataAccess.getDataService()
                 .getFlatData()
-                .getFlatsByRegionId(regionId)
+                .getFlatsByRegionId(region.getId())
                 .observe(this, this::onFlatsLoaded);
     }
 
@@ -143,12 +163,13 @@ public class CategoryActivity extends AppCompatActivity {
     private void addFlat(Flat flat) {
         // TODO
         FlatSize flatSize = new FlatSize(15, 20, 3000d);
-        FlatCard flatCard = new FlatCard(this, flat, flatSize.getPrice(), region.getName());
+        FlatCard flatCard = new FlatCard(this, flat, flatSize.getPrice(), region.getName(), this);
 
         flatCard.setOnClickListener(view -> {
             FlatDetailsActivity.FlatSize = flatSize;
             Intent intent = new Intent(this, FlatDetailsActivity.class);
             intent.putExtra("Flat", flat);
+            intent.putExtra("Region", region.copyAndApply(r -> r.setImage(null)));
             try {
                 startActivityForResult(intent, REQUEST_SYNC);
             } catch (Exception e){
@@ -160,13 +181,15 @@ public class CategoryActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if(resultCode != RESULT_OK) return;
+        super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == REQUEST_SYNC) {
+        if (resultCode != RESULT_OK) return;
+
+        if (requestCode == REQUEST_SYNC) {
             updateFlatData();
         }
 
-        if(requestCode == ADD_FLAT && data != null) {
+        if (requestCode == ADD_FLAT && data != null) {
             Flat addedFlat = (Flat) data.getSerializableExtra(FLAT_INTENT_TAG);
             DataAccess.getDataService()
                     .getFlatData()

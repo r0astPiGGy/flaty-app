@@ -10,15 +10,16 @@
         android:icon="@drawable/saved_icon"
         android:title="@string/saved_lower" />
 
-<!--    <item-->
-<!--        android:id="@+id/navigation_chat"-->
-<!--        android:icon="@drawable/cart_icon"-->
-<!--        android:title="@string/cart" />-->
-
     <item
         android:id="@+id/navigation_notify"
         android:icon="@drawable/notify_icon"
         android:title="@string/notify_lower" />
+
+    <item
+        android:id="@+id/navigation_chat"
+        android:icon="@drawable/chat_icon"
+        android:title="@string/chat" />
+
     <item
         android:id="@+id/navigation_profile"
         android:icon="@drawable/person_icon"

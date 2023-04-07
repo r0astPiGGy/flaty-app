@@ -1,16 +1,24 @@
 package hcmute.edu.vn.phamdinhquochoa.flatyapp.beans;
 
+import com.google.firebase.firestore.Exclude;
+
 import java.io.Serializable;
 import java.util.UUID;
+import java.util.function.Consumer;
+
+import javax.annotation.Nullable;
 
 public class Region implements Serializable {
     private String id;
     private String name;
     private String address;
     private String phone;
+    @Exclude
     private byte[] image;
 
-    public Region() {}
+    public Region() {
+        id = UUID.randomUUID().toString();
+    }
 
     public Region(String name, String address, String phone, byte[] image) {
         this(UUID.randomUUID().toString(), name, address, phone, image);
@@ -52,8 +60,23 @@ public class Region implements Serializable {
         this.phone = phone;
     }
 
+    @Exclude
+    @Nullable
     public byte[] getImage() {
         return image;
+    }
+
+    @Exclude
+    public Region copy() {
+        return new Region(id, name, address, phone, image);
+    }
+
+    @Exclude
+    public Region copyAndApply(Consumer<Region> copyConsumer) {
+        Region copy = copy();
+
+        copyConsumer.accept(copy);
+        return copy;
     }
 
     public void setImage(byte[] image) {

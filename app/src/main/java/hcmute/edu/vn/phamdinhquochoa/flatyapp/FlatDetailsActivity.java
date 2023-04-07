@@ -3,6 +3,7 @@ package hcmute.edu.vn.phamdinhquochoa.flatyapp;
 import static hcmute.edu.vn.phamdinhquochoa.flatyapp.FlatEditActivity.FLAT_INTENT_TAG;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -21,14 +22,14 @@ import hcmute.edu.vn.phamdinhquochoa.flatyapp.utils.ImageUtils;
 
 public class FlatDetailsActivity extends AppCompatActivity {
     private ActivityFlatDetailsBinding binding;
-    private TextView tvPrice, tvQuantity;
+    private TextView tvPrice;
 
     private static final int FLAT_EDIT_REQUEST = 123;
 
-    private static int quantity;
     public static FlatSize FlatSize;
 
     private Flat flat;
+    private Region region;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,43 +38,21 @@ public class FlatDetailsActivity extends AppCompatActivity {
         binding = ActivityFlatDetailsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        quantity = 1;
-
         referenceComponent();
         loadData();
     }
 
     private String getRoundPrice(Double price){
-        return "стоимость: "+Math.round(price) + " руб";
+        return "Стоимость: " + Math.round(price) + " руб";
     }
-
-    private String getTotalPrice() { return "стоимость: "+Math.round(FlatSize.getPrice() * quantity) + " руб."; }
 
     private void referenceComponent(){
         binding.btnBack.setOnClickListener(view -> onBackButtonClicked());
 
         tvPrice = findViewById(R.id.tvPrice);
 
-        tvQuantity = findViewById(R.id.tvFlatQuantity_Flat);
-
         Button btnSavedFlat = findViewById(R.id.btnSavedFlat);
         btnSavedFlat.setOnClickListener(view -> onFavoriteButtonClicked());
-
-        Button btnAddQuantity = findViewById(R.id.btnAddQuantity_Flat);
-        btnAddQuantity.setOnClickListener(view -> {
-            quantity++;
-            tvQuantity.setText(String.format("%s", quantity));
-            tvPrice.setText(getTotalPrice());
-        });
-
-        Button btnSubQuantity = findViewById(R.id.btnSubQuantity_Flat);
-        btnSubQuantity.setOnClickListener(view -> {
-            if(quantity > 1){
-                quantity--;
-                tvQuantity.setText(String.format("%s", quantity));
-                tvPrice.setText(getTotalPrice());
-            }
-        });
 
         if(!DataAccess.getUser().isAdmin()) return;
 
@@ -109,9 +88,11 @@ public class FlatDetailsActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if(resultCode != RESULT_OK) return;
+        super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == FLAT_EDIT_REQUEST && data != null) {
+        if (resultCode != RESULT_OK) return;
+
+        if (requestCode == FLAT_EDIT_REQUEST && data != null) {
             flat = (Flat) data.getSerializableExtra(FLAT_INTENT_TAG);
             DataAccess.getDataService().getFlatData().updateFlat(flat);
             updateFlatInfo();
@@ -150,6 +131,7 @@ public class FlatDetailsActivity extends AppCompatActivity {
         }
 
         flat = (Flat) intent.getSerializableExtra("Flat");
+        region = (Region) intent.getSerializableExtra("Region");
 
         updateFlatInfo();
     }
@@ -157,12 +139,31 @@ public class FlatDetailsActivity extends AppCompatActivity {
     private void updateFlatInfo() {
         binding.tvFlatName.setText(flat.getName());
         binding.tvDescription.setText(flat.getDescription());
-        binding.image.setImageBitmap(ImageUtils.convertByteArrayToBitmap(flat.getImage()));
+        updateFlatImage();
 
-        Region region = flat.getRegionReference();
         binding.tvRegionName.setText(String.format("Название региона \n%s", region.getName()));
         binding.tvRegionAddress.setText(String.format("Адрес \n%s", region.getAddress()));
 
         tvPrice.setText(getRoundPrice(FlatSize.getPrice()));
+    }
+
+    private void updateFlatImage() {
+        byte[] image = flat.getImage();
+
+        if(image == null) {
+            DataAccess.getDataService()
+                    .getImageStorage()
+                    .getImageByUri(flat.getId())
+                    .observe(this, this::updateFlatImage);
+            return;
+        }
+        updateFlatImage(image);
+    }
+
+    private void updateFlatImage(byte[] image) {
+        flat.setImage(image);
+
+        Bitmap bitmap = ImageUtils.convertByteArrayToBitmap(image);
+        binding.image.setImageBitmap(bitmap);
     }
 }

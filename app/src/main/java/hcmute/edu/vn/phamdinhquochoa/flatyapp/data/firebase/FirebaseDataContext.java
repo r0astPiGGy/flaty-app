@@ -31,6 +31,7 @@ public class FirebaseDataContext {
         if(task.isSuccessful()) {
             dataTask.invokeOnComplete();
         } else {
+            task.getException().printStackTrace();
             dataTask.invokeOnFailure(task.getException());
         }
     }

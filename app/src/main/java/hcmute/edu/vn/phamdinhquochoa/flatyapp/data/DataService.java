@@ -2,6 +2,8 @@ package hcmute.edu.vn.phamdinhquochoa.flatyapp.data;
 
 public interface DataService {
 
+    // TODO: add cache
+
     FavoriteRegionData getFavoriteRegionData();
 
     FavoriteFlatData getFavoriteFlatData();
@@ -15,5 +17,7 @@ public interface DataService {
     AuthData getAuthData();
 
     UserData getUserData();
+
+    ImageStorage getImageStorage();
 
 }

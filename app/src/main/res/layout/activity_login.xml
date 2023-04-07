@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context="hcmute.edu.vn.phamdinhquochoa.flatyapp.LoginActivity">
 
@@ -76,11 +77,13 @@
             android:orientation="vertical"
             android:layout_height="wrap_content">
 
-            <CheckBox
+            <com.google.android.material.checkbox.MaterialCheckBox
                 android:id="@+id/checkbox_is_admin"
                 android:layout_width="match_parent"
+                android:checked="true"
+                app:buttonTint="@color/black"
+                app:buttonIconTint="@color/white"
                 android:layout_height="wrap_content"
-                android:buttonTint="@color/black"
                 android:text="@string/prompt_is_admin" />
 
         </LinearLayout>
@@ -91,7 +94,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
-            android:background="@drawable/bg_noodle"
+            android:backgroundTint="@color/login"
             android:fontFamily="@font/notop_sans_regular"
             android:paddingTop="15dp"
             android:paddingBottom="15dp"
@@ -106,11 +109,11 @@
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="30dp"
-            android:background="@drawable/size_box_price"
+            android:backgroundTint="@color/register"
             android:fontFamily="@font/notop_sans_regular"
             android:paddingTop="15dp"
             android:paddingBottom="15dp"
-            android:text="@string/dang_ky"
+            android:text="@string/register"
             android:textColor="@color/black"
             android:textSize="18sp" />
     </LinearLayout>

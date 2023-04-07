@@ -13,4 +13,6 @@
     <color name="choose_color">#DA1B1B</color>
     <color name="bgBottomNavigation">#3F51B5</color>
     <color name="yellow">#FFC107</color>
+    <color name="login">#6AC5CA</color>
+    <color name="register">#CC4848</color>
 </resources>

@@ -1,69 +1,88 @@
 package hcmute.edu.vn.phamdinhquochoa.flatyapp;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import androidx.viewpager2.widget.ViewPager2;
 
 import hcmute.edu.vn.phamdinhquochoa.Flatyapp.R;
+import hcmute.edu.vn.phamdinhquochoa.Flatyapp.databinding.ActivityHomeBinding;
+import hcmute.edu.vn.phamdinhquochoa.flatyapp.adapter.ViewPagerAdapter;
 import hcmute.edu.vn.phamdinhquochoa.flatyapp.fragments.*;
 
 public class HomeActivity extends AppCompatActivity {
 
+    private ActivityHomeBinding binding;
     private static int clickToLogout;
     private static int stackLayout = 0;
-    private Fragment homeFragment, savedFragment, notifyFragment, profileFragment;
-    private BottomNavigationView navigation;
 
-    private void referenceFragment(){
-        homeFragment = new HomeFragment();
-        savedFragment = new SavedFragment();
-        notifyFragment = new NotifyFragment();
-        profileFragment = new ProfileFragment();
-    }
+    private final int[] navbar_ids = {
+            R.id.navigation_home,
+            R.id.navigation_saved,
+            R.id.navigation_notify,
+            R.id.navigation_chat,
+            R.id.navigation_profile
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+
+        binding = ActivityHomeBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         stackLayout++;
         clickToLogout = 0;
-        referenceFragment();
 
-        Intent intent = getIntent();
+        ViewPagerAdapter adapter = ViewPagerAdapter.of(this,
+                new HomeFragment(),
+                new SavedFragment(),
+                new NotifyFragment(),
+                new ChatFragment(),
+                new ProfileFragment()
+        );
 
-        navigation = findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        binding.mainPager.setAdapter(adapter);
 
-        String request = intent.getStringExtra("request");
-        if(request != null) {
-            switch (request) {
-                case "history":
-                case "check":
-                case "payment":
-                case "hint":
-                    loadFragment(notifyFragment, 3);
-                    break;
-                default:
-                    loadFragment(homeFragment, 0);
-                    break;
+        binding.mainPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+
+                int id = getNavigationItemIdByPosition(position);
+                binding.navigation.setSelectedItemId(id);
             }
-        } else {
-            loadFragment(homeFragment, 0);
+        });
+
+        binding.navigation.setOnItemSelectedListener(item -> {
+            int id = item.getItemId();
+            int position = getNavigationPositionById(id);
+            binding.mainPager.setCurrentItem(position);
+            return true;
+        });
+    }
+
+    private int getNavigationItemIdByPosition(int position) {
+        return navbar_ids[position];
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    private int getNavigationPositionById(int id) {
+        switch (id) {
+            case R.id.navigation_home: return 0;
+            case R.id.navigation_saved: return 1;
+            case R.id.navigation_notify: return 2;
+            case R.id.navigation_chat: return 3;
+            case R.id.navigation_profile: return 4;
         }
+        return 0;
     }
 
     @Override
     public void onBackPressed() {
-        System.out.println(stackLayout);
         if(stackLayout < 2){
             clickToLogout++;
 
@@ -76,9 +95,7 @@ public class HomeActivity extends AppCompatActivity {
 
             new CountDownTimer(3000, 1000) {
                 @Override
-                public void onTick(long l) {
-
-                }
+                public void onTick(long l) {}
 
                 @Override
                 public void onFinish() {
@@ -89,35 +106,5 @@ public class HomeActivity extends AppCompatActivity {
             stackLayout--;
             super.onBackPressed();
         }
-    }
-
-    @SuppressLint("NonConstantResourceId")
-    private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = item -> {
-                switch (item.getItemId()) {
-                    case R.id.navigation_home:
-                        loadFragment(homeFragment, 0);
-                        return true;
-                    case R.id.navigation_saved:
-                        loadFragment(savedFragment, 1);
-                        return true;
-                    case R.id.navigation_notify:
-                        loadFragment(notifyFragment, 3);
-                        return true;
-                    case R.id.navigation_profile:
-                        loadFragment(profileFragment, 2);
-                        return true;
-                }
-                return false;
-            };
-
-    private void loadFragment(Fragment fragment, int indexItem) {
-        navigation.getMenu().getItem(indexItem).setChecked(true);
-
-        // load fragment
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.frame_container, fragment)
-                .setTransition(FragmentTransaction.TRANSIT_NONE)
-                .commit();
     }
 }

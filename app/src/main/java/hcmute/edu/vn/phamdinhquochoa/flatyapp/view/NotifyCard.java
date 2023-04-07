@@ -1,4 +1,4 @@
-package hcmute.edu.vn.phamdinhquochoa.flatyapp.components;
+package hcmute.edu.vn.phamdinhquochoa.flatyapp.view;
 
 import android.content.Context;
 import android.view.LayoutInflater;

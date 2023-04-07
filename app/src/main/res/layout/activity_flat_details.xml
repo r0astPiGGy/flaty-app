@@ -159,39 +159,6 @@
                 android:textColor="@color/black"
                 android:textSize="26sp"
                 android:textStyle="bold" />
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-                <Button
-                    android:id="@+id/btnSubQuantity_Flat"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="40sp"
-                    android:gravity="center"
-                    android:textSize="20sp"
-                    android:backgroundTint="@color/teal_700"
-                    android:text=""/>
-                <TextView
-                    android:id="@+id/tvFlatQuantity_Flat"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/teal_700"
-                    android:text="@string/default_quantity"/>
-                <Button
-                    android:id="@+id/btnAddQuantity_Flat"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="40sp"
-                    android:gravity="center"
-                    android:textSize="20sp"
-                    android:backgroundTint="@color/teal_700"
-                    android:text=""/>
-            </LinearLayout>
         </LinearLayout>
         <LinearLayout
             android:layout_weight="1"
@@ -207,16 +174,6 @@
                 android:padding="5dp"
                 android:background="@drawable/saved_icon"
                 android:backgroundTint="@color/choose_color"/>
-            <android.support.v4.widget.Space
-                android:layout_width="10dp"
-                android:layout_height="match_parent"/>
-            <Button
-                android:id="@+id/btnAddToCart"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:padding="5dp"
-                android:background="@drawable/bg_noodle"
-                android:backgroundTint="@color/teal_700"/>
         </LinearLayout>
     </LinearLayout>
 

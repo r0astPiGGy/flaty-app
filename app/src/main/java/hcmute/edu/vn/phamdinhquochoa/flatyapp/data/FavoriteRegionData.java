@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
+import hcmute.edu.vn.phamdinhquochoa.flatyapp.beans.FavoriteRegion;
 import hcmute.edu.vn.phamdinhquochoa.flatyapp.beans.Region;
 
 public interface FavoriteRegionData {
@@ -12,6 +13,6 @@ public interface FavoriteRegionData {
 
     DataTask removeFavorite(String regionId);
 
-    LiveData<List<Region>> getFavoriteRegions();
+    LiveData<List<FavoriteRegion>> getFavoriteRegions();
 
 }

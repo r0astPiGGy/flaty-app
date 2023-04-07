@@ -11,31 +11,33 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import hcmute.edu.vn.phamdinhquochoa.Flatyapp.R;
-import hcmute.edu.vn.phamdinhquochoa.Flatyapp.databinding.ActivityFlatEditBinding;
+import hcmute.edu.vn.phamdinhquochoa.Flatyapp.databinding.ActivityRegionEditBinding;
 import hcmute.edu.vn.phamdinhquochoa.flatyapp.beans.Flat;
+import hcmute.edu.vn.phamdinhquochoa.flatyapp.beans.Region;
 import hcmute.edu.vn.phamdinhquochoa.flatyapp.utils.ImageUtils;
 
-public class FlatEditActivity extends AppCompatActivity {
+public class RegionEditActivity extends AppCompatActivity {
 
     private static final int EDIT_MODE = 0;
     private static final int ADD_MODE = 1;
 
     private static final int IMAGE_CHOSEN_RESULT = 0;
 
-    public static final String FLAT_INTENT_TAG = "flat";
+    public static final String REGION_INTENT_TAG = "region";
 
-    private ActivityFlatEditBinding binding;
-    private Flat flat;
+    private ActivityRegionEditBinding binding;
+    private Region region;
 
     private byte[] image;
     private String name;
-    private String description;
+    private String address;
+    private String phone;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = ActivityFlatEditBinding.inflate(getLayoutInflater());
+        binding = ActivityRegionEditBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         initViews();
@@ -44,26 +46,28 @@ public class FlatEditActivity extends AppCompatActivity {
     private void initViews() {
         Bundle extras = getIntent().getExtras();
 
-        flat = (Flat) extras.getSerializable("flat");
+        region = (Region) extras.getSerializable("region");
         int mode = extras.getInt("mode");
 
         if(mode == ADD_MODE) {
-            binding.buttonAddFlat.setText(getResources().getText(R.string.activity_flat_edit_button_add));
-            binding.flatEditTitle.setText(getResources().getText(R.string.activity_flat_edit_text_add));
+            binding.buttonAddRegion.setText(getResources().getText(R.string.activity_region_edit_button_add));
+            binding.regionEditTitle.setText(getResources().getText(R.string.activity_region_edit_text_add));
         }
 
-        name = flat.getName();
-        description = flat.getDescription();
-        image = flat.getImage();
+        name = region.getName();
+        address = region.getAddress();
+        phone = region.getPhone();
+        image = region.getImage();
 
-        binding.editTextFlatName.setText(name);
-        binding.editTextFlatDescription.setText(description);
+        binding.editTextRegionName.setText(name);
+        binding.editTextRegionAddress.setText(address);
+        binding.editTextRegionPhoneNumber.setText(phone);
         if(image != null) {
             binding.image.setImageBitmap(ImageUtils.convertByteArrayToBitmap(image));
         }
 
-        binding.buttonAddFlat.setOnClickListener(v -> onSaveButtonClicked());
-        binding.buttonCancelFlat.setOnClickListener(v -> onCancelButtonClicked());
+        binding.buttonAddRegion.setOnClickListener(v -> onSaveButtonClicked());
+        binding.buttonCancelRegion.setOnClickListener(v -> onCancelButtonClicked());
         binding.buttonChangeImage.setOnClickListener(v -> onImageChangeClicked());
     }
 
@@ -77,10 +81,9 @@ public class FlatEditActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode != RESULT_OK) return;
+        if(resultCode != RESULT_OK) return;
 
-        if (requestCode == IMAGE_CHOSEN_RESULT && data != null) {
+        if(requestCode == IMAGE_CHOSEN_RESULT && data != null) {
             changeImageTo(data.getData());
         }
     }
@@ -100,8 +103,9 @@ public class FlatEditActivity extends AppCompatActivity {
             image = ImageUtils.resizeAndConvertDrawable(imageDrawable);
         }
 
-        name = binding.editTextFlatName.getText().toString().trim();
-        description = binding.editTextFlatDescription.getText().toString().trim();
+        name = binding.editTextRegionName.getText().toString().trim();
+        address = binding.editTextRegionAddress.getText().toString().trim();
+        phone = binding.editTextRegionPhoneNumber.getText().toString().trim();
     }
 
     private boolean isUserInputValid() {
@@ -111,12 +115,17 @@ public class FlatEditActivity extends AppCompatActivity {
         }
 
         if(name == null || name.isEmpty()) {
-            showToast(R.string.fill_name);
+            showToast(R.string.fill_region_name);
             return false;
         }
 
-        if(description == null || description.isEmpty()) {
-            showToast(R.string.fill_description);
+        if(address == null || address.isEmpty()) {
+            showToast(R.string.fill_region_address);
+            return false;
+        }
+
+        if(phone == null || phone.isEmpty()) {
+            showToast(R.string.fill_region_phone);
             return false;
         }
 
@@ -134,12 +143,13 @@ public class FlatEditActivity extends AppCompatActivity {
             return;
         }
 
-        flat.setName(name);
-        flat.setDescription(description);
-        flat.setImage(image);
+        region.setName(name);
+        region.setAddress(address);
+        region.setPhone(phone);
+        region.setImage(image);
 
         Intent result = new Intent();
-        result.putExtra(FLAT_INTENT_TAG, flat);
+        result.putExtra(REGION_INTENT_TAG, region);
 
         setResult(RESULT_OK, result);
         finish();
@@ -149,13 +159,13 @@ public class FlatEditActivity extends AppCompatActivity {
         finish();
     }
 
-    public static void applyIntentForEdit(Intent intent, Flat flat) {
+    public static void applyIntentForEdit(Intent intent, Region region) {
         intent.putExtra("mode", EDIT_MODE);
-        intent.putExtra("flat", flat);
+        intent.putExtra("region", region);
     }
 
-    public static void applyIntentForAdd(Intent intent, Flat flat) {
+    public static void applyIntentForAdd(Intent intent, Region region) {
         intent.putExtra("mode", ADD_MODE);
-        intent.putExtra("flat", flat);
+        intent.putExtra("region", region);
     }
 }

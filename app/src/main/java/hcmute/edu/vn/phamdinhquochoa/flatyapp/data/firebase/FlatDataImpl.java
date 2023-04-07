@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -13,6 +14,7 @@ import java.util.stream.Collectors;
 import hcmute.edu.vn.phamdinhquochoa.flatyapp.K;
 import hcmute.edu.vn.phamdinhquochoa.flatyapp.beans.FavoriteFlat;
 import hcmute.edu.vn.phamdinhquochoa.flatyapp.beans.Flat;
+import hcmute.edu.vn.phamdinhquochoa.flatyapp.dao.DataAccess;
 import hcmute.edu.vn.phamdinhquochoa.flatyapp.data.DataTask;
 import hcmute.edu.vn.phamdinhquochoa.flatyapp.data.FlatData;
 
@@ -24,14 +26,37 @@ public class FlatDataImpl extends FirebaseDataContext implements FlatData {
 
     @Override
     public DataTask addFlat(Flat flat) {
-        DataTask.Invokable task = DataTask.createDataTask();
+        return updateFlat(flat);
+    }
+
+    @Override
+    public DataTask updateFlat(Flat flat) {
+        DataTask.Invokable dataTask = createTask();
 
         db().collection(K.Collections.FLATS)
                 .document(flat.getId())
                 .set(flat)
-                .addOnCompleteListener(t -> handleTaskCompletion(t, task));
+                .addOnCompleteListener(t -> {
+                    if(t.isSuccessful()) {
+                        updateFlatImage(dataTask, flat);
+                    } else {
+                        dataTask.invokeOnFailure(t.getException());
+                    }
+                });
 
-        return task;
+        return dataTask;
+    }
+
+    private void updateFlatImage(DataTask.Invokable task, Flat flat) {
+        DataAccess.getDataService().getImageStorage()
+                .updateImageByUri(flat.getImage(), flat.getId())
+                .whenComplete((Null, exception) -> {
+                    if(exception == null) {
+                        task.invokeOnComplete();
+                    } else {
+                        task.invokeOnFailure(exception);
+                    }
+                });
     }
 
     @Override
@@ -49,6 +74,25 @@ public class FlatDataImpl extends FirebaseDataContext implements FlatData {
     }
 
     @Override
+    public LiveData<List<Flat>> getFlatsByIds(List<String> ids) {
+        MutableLiveData<List<Flat>> mutableLiveData = new MutableLiveData<>();
+
+        db().collection(K.Collections.FLATS)
+                .whereIn("id", ids)
+                .get()
+                .addOnSuccessListener(q -> {
+                    List<Flat> flats = q.getDocuments()
+                            .stream()
+                            .map(d -> d.toObject(Flat.class))
+                            .collect(Collectors.toList());
+
+                    mutableLiveData.postValue(flats);
+                }).addOnFailureListener(Throwable::printStackTrace);
+
+        return mutableLiveData;
+    }
+
+    @Override
     public DataTask deleteFlatById(String id) {
         DataTask.Invokable dataTask = createTask();
 
@@ -58,18 +102,6 @@ public class FlatDataImpl extends FirebaseDataContext implements FlatData {
                 .addOnSuccessListener(q -> {
                     dataTask.invokeOnComplete();
                 }).addOnFailureListener(dataTask::invokeOnFailure);
-
-        return dataTask;
-    }
-
-    @Override
-    public DataTask updateFlat(Flat flat) {
-        DataTask.Invokable dataTask = createTask();
-
-        db().collection(K.Collections.FLATS)
-                .document(flat.getId())
-                .set(flat)
-                .addOnCompleteListener(t -> handleTaskCompletion(t, dataTask));
 
         return dataTask;
     }
@@ -117,31 +149,16 @@ public class FlatDataImpl extends FirebaseDataContext implements FlatData {
     }
 
     @Override
-    public Flat convertFavorite(FavoriteFlat favoriteFlat) {
-        final Object locker = new Object();
-        AtomicReference<Flat> flatAtomicReference = new AtomicReference<>();
+    public CompletableFuture<Flat> convertFavorite(FavoriteFlat favoriteFlat) {
+        CompletableFuture<Flat> task = new CompletableFuture<>();
 
-        db().collection(K.Collections.FLATS)
+        FirebaseFirestore.getInstance()
+                .collection(K.Collections.FLATS)
                 .document(favoriteFlat.getFlatId())
                 .get()
-                .addOnCompleteListener(d -> {
-                    if(d.isSuccessful()) {
-                        flatAtomicReference.set(d.getResult().toObject(Flat.class));
-                    }
+                .addOnSuccessListener(d -> task.complete(d.toObject(Flat.class)))
+                .addOnFailureListener(task::completeExceptionally);
 
-                    synchronized (locker) {
-                        locker.notifyAll();
-                    }
-                });
-
-        synchronized (locker) {
-            try {
-                locker.wait();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-
-        return flatAtomicReference.get();
+        return task;
     }
 }

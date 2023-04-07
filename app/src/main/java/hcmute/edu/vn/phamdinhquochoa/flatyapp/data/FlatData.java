@@ -3,6 +3,7 @@ package hcmute.edu.vn.phamdinhquochoa.flatyapp.data;
 import androidx.lifecycle.LiveData;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import hcmute.edu.vn.phamdinhquochoa.flatyapp.beans.FavoriteFlat;
 import hcmute.edu.vn.phamdinhquochoa.flatyapp.beans.Flat;
@@ -12,6 +13,8 @@ public interface FlatData {
     DataTask addFlat(Flat flat);
 
     LiveData<Flat> getFlatById(String id);
+
+    LiveData<List<Flat>> getFlatsByIds(List<String> ids);
 
     DataTask deleteFlatById(String id);
 
@@ -23,6 +26,6 @@ public interface FlatData {
 
     LiveData<List<Flat>> getFlatsByKeyWord(String keyWord);
 
-    Flat convertFavorite(FavoriteFlat flat);
+    CompletableFuture<Flat> convertFavorite(FavoriteFlat flat);
 
 }
