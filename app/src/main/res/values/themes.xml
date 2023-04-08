@@ -5,8 +5,18 @@
         <item name="colorPrimary">@color/main_color</item>
         <item name="colorPrimaryDark">@color/main_color</item>
         <item name="colorAccent">@color/teal_200</item>
-        <!-- Customize your theme here. -->
+        <item name="circularProgressIndicatorStyle">@style/Widget.App.CircularProgressIndicator</item>
     </style>
+
+    <style name="Widget.App.CircularProgressIndicator" parent="Widget.Material3.CircularProgressIndicator.Medium">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.CircularProgressIndicator</item>
+        <item name="trackThickness">20dp</item>
+    </style>
+
+    <style name="ThemeOverlay.App.CircularProgressIndicator" parent="">
+        <item name="indicatorColor">@color/white</item>
+    </style>
+
     <style name="Widget.App.Button.TextButton" parent="Widget.Material3.Button.TextButton">
         <item name="materialThemeOverlay">@style/ThemeOverlay.App.Button.TextButton</item>
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Button</item>

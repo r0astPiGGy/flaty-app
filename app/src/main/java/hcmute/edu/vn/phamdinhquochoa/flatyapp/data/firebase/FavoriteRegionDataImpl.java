@@ -41,7 +41,7 @@ public class FavoriteRegionDataImpl extends FirebaseDataContext implements Favor
     public DataTask removeFavorite(String regionId) {
         DataTask.Invokable task = createTask();
 
-        db().collection(K.Collections.FAVORITE_FLATS)
+        db().collection(K.Collections.FAVORITE_REGIONS)
                 .whereEqualTo("regionId", regionId)
                 .whereEqualTo("userId", getUserId())
                 .get().addOnSuccessListener(t -> {

@@ -26,7 +26,11 @@
     <string name="fill_region_address">Укажите адрес региона</string>
 
     <string name="hint_phone">0984 349 xxx</string>
+    <string name="phone_example">+375441234567</string>
     <string name="address">Дата</string>
+
+    <string name="fill_blanks">Заполните все поля!</string>
+    <string name="request_sent">Заявка успешно отправлена</string>
 
     <string name="add_region">Добавить район</string>
     <string name="add_flat">Добавить квартиру</string>
@@ -94,6 +98,9 @@
         <item>Other</item>
     </string-array>
 
+    <string name="fav_regions">Районы</string>
+    <string name="fav_flats">Квартиры</string>
+
     <string name="date_of_birth">Дата рождения</string>
     <string name="DoB_hint">Нажмите, чтобы выбрать дату</string>
     <string name="Region_information">Информация о районе</string>
@@ -102,6 +109,7 @@
     <string name="history">История</string>
     <string name="cart">Корзина</string>
     <string name="chat">Обратная связь</string>
+    <string name="chat_requests">Заявки</string>
     <string name="notify">УВЕДОМЛЕНИЯ</string>
     <string name="account">УЧЕТНАЯ ЗАПИСЬ</string>
     <string name="apps">Общие</string>
@@ -138,7 +146,9 @@
     <string name="flat_description">Описание квартиры</string>
     <string name="flat_description_hint">Описание</string>
     <string name="flat_price">Цена квартиры</string>
+    <string name="fav_flat_delete_desc">Delete favorite flat</string>
     <string name="flat_price_hint">Цена</string>
+    <string name="flat_price_card">Цена:</string>
     <string name="choose_flat_image">Выбрать изображение</string>
     <string name="activity_region_edit_text_edit">Редактировать регион</string>
     <string name="activity_region_edit_text_add">Добавить регион</string>

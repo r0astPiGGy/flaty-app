@@ -1,14 +1,20 @@
 package hcmute.edu.vn.phamdinhquochoa.flatyapp;
 
+import static hcmute.edu.vn.phamdinhquochoa.flatyapp.utils.EditTextUtils.getInputOrNull;
+
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 import hcmute.edu.vn.phamdinhquochoa.Flatyapp.R;
 import hcmute.edu.vn.phamdinhquochoa.Flatyapp.databinding.ActivityFlatEditBinding;
@@ -100,8 +106,8 @@ public class FlatEditActivity extends AppCompatActivity {
             image = ImageUtils.resizeAndConvertDrawable(imageDrawable);
         }
 
-        name = binding.editTextFlatName.getText().toString().trim();
-        description = binding.editTextFlatDescription.getText().toString().trim();
+        name = getInputOrNull(binding.editTextFlatName);
+        description = getInputOrNull(binding.editTextFlatDescription);
     }
 
     private boolean isUserInputValid() {

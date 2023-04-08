@@ -10,25 +10,28 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import java.util.List;
 
+import hcmute.edu.vn.phamdinhquochoa.Flatyapp.databinding.FragmentHomeBinding;
 import hcmute.edu.vn.phamdinhquochoa.flatyapp.CategoryActivity;
-import hcmute.edu.vn.phamdinhquochoa.Flatyapp.R;
 import hcmute.edu.vn.phamdinhquochoa.flatyapp.RegionEditActivity;
+import hcmute.edu.vn.phamdinhquochoa.flatyapp.adapter.RegionViewAdapter;
 import hcmute.edu.vn.phamdinhquochoa.flatyapp.beans.Region;
-import hcmute.edu.vn.phamdinhquochoa.flatyapp.view.RegionCard;
 import hcmute.edu.vn.phamdinhquochoa.flatyapp.dao.DataAccess;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+
+    private RegionViewAdapter adapter;
+    private FragmentHomeBinding binding;
     private Intent intent;
-    private View mainView;
     private Button addRegionButton;
 
     private final static int ADD_REGION_RC = 0;
@@ -39,21 +42,52 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        if(mainView == null){
-            mainView = inflater.inflate(R.layout.fragment_home, container, false);
-            addRegionButton = mainView.findViewById(R.id.button_add_region);
-            lazyInit();
-        }
 
+        adapter = new RegionViewAdapter(getViewLifecycleOwner());
+        binding = FragmentHomeBinding.inflate(inflater, container, false);
+
+        addRegionButton = binding.buttonAddRegion;
+
+        initViews();
         updateButton();
 
-        return mainView;
+        return binding.getRoot();
     }
 
-    private void lazyInit() {
-        updateRegions();
+    private void initViews() {
+        binding.regionRecyclerView.setAdapter(adapter);
 
-        SearchView searchBar = mainView.findViewById(R.id.search_bar);
+        adapter.setOnRegionClickedListener(region -> {
+            intent = new Intent(getActivity(), CategoryActivity.class);
+            intent.putExtra("Region", region);
+            startActivity(intent);
+        });
+        adapter.setOnRegionSaveButtonClickedListener(region -> {
+            DataAccess.getDataService()
+                    .getFavoriteRegionData()
+                    .addFavorite(region.getId())
+                    .addOnCompleteListener(() -> {
+                        Toast.makeText(getContext(), "Сохранение информации о регионе прошло успешно!", Toast.LENGTH_SHORT).show();
+                    })
+                    .addOnFailureListener(e -> {
+                        e.printStackTrace();
+                        Toast.makeText(getContext(), "Произошла ошибка при сохранении информации!", Toast.LENGTH_SHORT).show();
+                    });
+        });
+
+        binding.swipeRefreshLayout.setOnRefreshListener(this);
+        binding.swipeRefreshLayout.post(() -> {
+            binding.swipeRefreshLayout.setRefreshing(true);
+            onRefresh();
+        });
+
+        initSearchBar();
+
+        addRegionButton.setOnClickListener(v -> onAddRegionButtonClicked());
+    }
+
+    private void initSearchBar() {
+        SearchView searchBar = binding.searchBar;
         searchBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
@@ -69,30 +103,23 @@ public class HomeFragment extends Fragment {
                 return false;
             }
         });
-        addRegionButton.setOnClickListener(v -> onAddRegionButtonClicked());
+    }
+
+    @Override
+    public void onRefresh() {
+        updateRegions();
     }
 
     private void updateRegions() {
         DataAccess.getDataService()
                 .getRegionData()
                 .getAllRegions()
-                .observe(this, this::onRegionsLoaded);
+                .observe(getViewLifecycleOwner(), this::onRegionsLoaded);
     }
 
     private void onRegionsLoaded(List<Region> regionList) {
-        LinearLayout layout_container = mainView.findViewById(R.id.layout_container_Region);
-        layout_container.removeAllViews();
-        for(Region region : regionList){
-            RegionCard card = new RegionCard(getContext(), region, false, this);
-            card.setOnClickListener(view -> {
-                intent = new Intent(getActivity(), CategoryActivity.class);
-                // TODO: put serializable
-                intent.putExtra("RegionId", region.getId());
-                startActivity(intent);
-            });
-
-            layout_container.addView(card);
-        }
+        binding.swipeRefreshLayout.setRefreshing(false);
+        adapter.setRegions(regionList);
     }
 
     private void onAddRegionButtonClicked() {

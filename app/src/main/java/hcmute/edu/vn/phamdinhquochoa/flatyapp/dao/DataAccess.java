@@ -29,4 +29,12 @@ public class DataAccess {
     public static User getUser() {
         return getDataService().getAuthData().getUser();
     }
+
+    public static boolean isUserAdmin() {
+        User user = getUser();
+
+        if(user == null) return false;
+
+        return user.isAdmin();
+    }
 }

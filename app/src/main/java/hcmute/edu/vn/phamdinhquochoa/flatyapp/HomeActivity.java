@@ -6,11 +6,14 @@ import android.os.CountDownTimer;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
 import hcmute.edu.vn.phamdinhquochoa.Flatyapp.R;
 import hcmute.edu.vn.phamdinhquochoa.Flatyapp.databinding.ActivityHomeBinding;
 import hcmute.edu.vn.phamdinhquochoa.flatyapp.adapter.ViewPagerAdapter;
+import hcmute.edu.vn.phamdinhquochoa.flatyapp.dao.DataAccess;
+import hcmute.edu.vn.phamdinhquochoa.flatyapp.data.DataService;
 import hcmute.edu.vn.phamdinhquochoa.flatyapp.fragments.*;
 
 public class HomeActivity extends AppCompatActivity {
@@ -37,11 +40,19 @@ public class HomeActivity extends AppCompatActivity {
         stackLayout++;
         clickToLogout = 0;
 
+        Fragment feedbackFragment;
+
+        if(DataAccess.isUserAdmin()) {
+            feedbackFragment = new RequestsFragment();
+        } else {
+            feedbackFragment = new ChatFragment();
+        }
+
         ViewPagerAdapter adapter = ViewPagerAdapter.of(this,
                 new HomeFragment(),
                 new SavedFragment(),
                 new NotifyFragment(),
-                new ChatFragment(),
+                feedbackFragment,
                 new ProfileFragment()
         );
 

@@ -1,10 +1,13 @@
 package hcmute.edu.vn.phamdinhquochoa.flatyapp;
 
+import static hcmute.edu.vn.phamdinhquochoa.flatyapp.utils.EditTextUtils.getInputOrNull;
+
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -81,9 +84,10 @@ public class RegionEditActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if(resultCode != RESULT_OK) return;
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != RESULT_OK) return;
 
-        if(requestCode == IMAGE_CHOSEN_RESULT && data != null) {
+        if (requestCode == IMAGE_CHOSEN_RESULT && data != null) {
             changeImageTo(data.getData());
         }
     }
@@ -103,9 +107,9 @@ public class RegionEditActivity extends AppCompatActivity {
             image = ImageUtils.resizeAndConvertDrawable(imageDrawable);
         }
 
-        name = binding.editTextRegionName.getText().toString().trim();
-        address = binding.editTextRegionAddress.getText().toString().trim();
-        phone = binding.editTextRegionPhoneNumber.getText().toString().trim();
+        name = getInputOrNull(binding.editTextRegionName);
+        address = getInputOrNull(binding.editTextRegionAddress);
+        phone = getInputOrNull(binding.editTextRegionPhoneNumber);
     }
 
     private boolean isUserInputValid() {

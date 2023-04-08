@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="hcmute.edu.vn.phamdinhquochoa.flatyapp.fragments.HomeFragment"
     android:orientation="vertical">
 
@@ -16,25 +17,25 @@
             android:contentDescription="@string/app_name"
             android:layout_width="140sp"
             android:layout_height="40sp"
-            android:src="@drawable/images"
+            android:src="@drawable/realt_icon"
             />
     </LinearLayout>
+
     <SearchView
         android:id="@+id/search_bar"
-        android:layout_width="360sp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="10dp"
         android:background="@drawable/bg_search_view"
-        android:elevation="5dp"/>
+        android:layout_margin="15dp"
+        android:elevation="5dp" />
 
     <Button
         android:id="@+id/button_add_region"
-        android:layout_width="285sp"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="15dp"
-        android:background="@drawable/bg_noodle"
+        android:layout_marginTop="5dp"
         android:fontFamily="@font/notop_sans_regular"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
@@ -42,19 +43,23 @@
         android:textColor="@color/black"
         android:textSize="15sp" />
 
-    <ScrollView
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/gray"
         android:layout_marginTop="14dp"
         android:layout_marginBottom="60dp">
 
-        <LinearLayout
-            android:id="@+id/layout_container_Region"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/region_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-        </LinearLayout>
-    </ScrollView>
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:itemCount="5"
+            tools:listitem="@layout/region_card"
+            >
+
+        </androidx.recyclerview.widget.RecyclerView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </LinearLayout>

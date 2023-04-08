@@ -20,4 +20,6 @@ public interface DataService {
 
     ImageStorage getImageStorage();
 
+    FeedbackRequestData getFeedbackRequestData();
+
 }

@@ -9,22 +9,28 @@
     android:focusable="false"
     android:checkable="false">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
         >
 
         <ImageView
-            android:id="@+id/flat_image"
-            android:layout_width="130dp"
-            android:layout_height="match_parent"
+            android:id="@+id/region_image"
+            android:layout_width="100dp"
+            android:layout_height="0dp"
             app:srcCompat="@drawable/empty_image"
             android:scaleType="centerCrop"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/card_body"
+            app:layout_constraintBottom_toBottomOf="@id/card_body"
             />
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:id="@+id/card_body"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/region_image"
+            app:layout_constraintEnd_toStartOf="@+id/fav_region_delete_button"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="16dp"
@@ -33,8 +39,8 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/flat_title"
-                android:text="@string/flat_name"
+                android:id="@+id/region_title"
+                android:text="@string/region_name"
                 android:textAppearance="?attr/textAppearanceTitleMedium"
                 />
 
@@ -45,43 +51,28 @@
                 android:layout_marginBottom="5dp"
                 />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="15dp"
-                >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/flat_price_card"
-                    android:textAppearance="?attr/textAppearanceBodyMedium"
-                    android:layout_marginEnd="5dp"
-                    />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/flat_price"
-                    android:text="@string/money_text"
-                    android:textAppearance="?attr/textAppearanceBodyMedium"
-                    />
-
-            </LinearLayout>
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/flat_region"
-                android:text="@string/region_address"
-                android:textAppearance="?attr/textAppearanceBodySmall"
+                android:id="@+id/region_description"
+                android:text="@string/example_Flat_describe"
+                android:textAppearance="?attr/textAppearanceBodyMedium"
                 />
 
         </LinearLayout>
 
-    </LinearLayout>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fav_region_delete_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/fav_flat_delete_desc"
+            app:srcCompat="@drawable/ic_baseline_delete_24"
+            android:layout_marginEnd="10dp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/card_body"
+            app:layout_constraintBottom_toBottomOf="@id/card_body"
+            />
 
-
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </com.google.android.material.card.MaterialCardView>

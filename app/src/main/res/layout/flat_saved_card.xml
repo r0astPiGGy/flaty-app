@@ -1,98 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/Widget.Material3.CardView.Outlined"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <LinearLayout
-        android:layout_marginStart="10sp"
-        android:layout_marginTop="10sp"
-        android:layout_marginEnd="10sp"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:clickable="false"
+    android:focusable="false"
+    android:checkable="false">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_milktea"
-        android:orientation="horizontal"
-        android:weightSum="10"
-        android:elevation="10sp"
-        tools:ignore="UselessParent">
+        android:layout_height="match_parent"
+        >
+
         <ImageView
-            android:id="@+id/imageSavedFlat"
-            android:contentDescription="@string/content_description_image"
-            android:scaleType="fitXY"
-            android:paddingTop="10sp"
-            android:paddingBottom="10sp"
-            android:layout_width="0sp"
-            android:layout_height="77sp"
-            android:src="@drawable/flat"
-            android:layout_weight="2"
-            android:layout_marginStart="10sp" />
+            android:id="@+id/flat_image"
+            android:layout_width="100dp"
+            android:layout_height="0dp"
+            app:srcCompat="@drawable/empty_image"
+            android:scaleType="centerCrop"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/card_body"
+            app:layout_constraintBottom_toBottomOf="@id/card_body"
+            />
+
         <LinearLayout
-            android:orientation="vertical"
-            android:layout_marginStart="5sp"
-            android:layout_width="0sp"
+            android:id="@+id/card_body"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/flat_image"
+            app:layout_constraintEnd_toStartOf="@+id/fav_flat_delete_button"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="6">
+            android:orientation="vertical"
+            android:padding="16dp"
+            >
+
             <TextView
-                android:id="@+id/tvFlatNameSaved"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/egg_banh_mi"
-                android:textStyle="bold"
-                android:textColor="@color/black"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="5sp" />
-            <LinearLayout
+                android:id="@+id/flat_title"
+                android:text="@string/flat_name"
+                android:textAppearance="?attr/textAppearanceTitleMedium"
+                />
+
+            <com.google.android.material.divider.MaterialDivider
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginStart="3dp"
-                android:background="@color/yellow" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal" >
+                android:orientation="horizontal"
+                android:layout_marginBottom="15dp"
+                >
+
                 <TextView
-                    android:id="@+id/tvFlatSavedSize"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/example_size"
-                    android:textColor="@color/black"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="5sp" />
+                    android:text="@string/flat_price_card"
+                    android:textAppearance="?attr/textAppearanceBodyMedium"
+                    android:layout_marginEnd="5dp"
+                    />
+
                 <TextView
-                    android:id="@+id/tvFlatSavedPrice"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/flat_price"
                     android:text="@string/money_text"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="15sp" />
+                    android:textAppearance="?attr/textAppearanceBodyMedium"
+                    />
+
             </LinearLayout>
+
             <TextView
-                android:id="@+id/tvFlatSavedRegionName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/app_name"
-                android:textColor="@color/black"
-                android:textStyle="italic"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="5sp" />
+                android:id="@+id/flat_region"
+                android:text="@string/region_address"
+                android:textAppearance="?attr/textAppearanceBodySmall"
+                />
+
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_margin="5dp"
-            android:layout_width="0sp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:gravity="center">
-            <Button
-                android:id="@+id/btnDeleteSaveCardItem"
-                android:layout_width="55dp"
-                android:layout_height="55dp"
-                android:background="@drawable/delete"
-                android:layout_gravity="center" />
-        </LinearLayout>
-    </LinearLayout>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fav_flat_delete_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/fav_flat_delete_desc"
+            app:srcCompat="@drawable/ic_baseline_delete_24"
+            android:layout_marginEnd="10dp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/card_body"
+            app:layout_constraintBottom_toBottomOf="@id/card_body"
+            />
 
-</LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

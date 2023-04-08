@@ -8,8 +8,6 @@ import java.util.function.Consumer;
 
 import javax.annotation.Nullable;
 
-import hcmute.edu.vn.phamdinhquochoa.flatyapp.dao.DataAccess;
-
 public class Flat implements Serializable {
 
     private String id;
@@ -19,18 +17,23 @@ public class Flat implements Serializable {
     private byte[] image;
     private String description;
     private String regionId;
+    private String price;
+
+    @Exclude
+    private Region regionReference;
 
     public Flat() {
-        this(UUID.randomUUID().toString(), "Unnamed", null, null, "No description", null);
+        this(UUID.randomUUID().toString(), "Unnamed", null, null, "No description", null, null);
     }
 
-    public Flat(String id, String name, String type, byte[] image, String description, String RegionId) {
+    public Flat(String id, String name, String type, byte[] image, String description, String RegionId, String price) {
         this.id = id;
         this.name = name;
         this.type = type;
         this.image = image;
         this.description = description;
         this.regionId = RegionId;
+        this.price = price;
     }
 
     public String getId() {
@@ -55,6 +58,14 @@ public class Flat implements Serializable {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
     }
 
     @Nullable
@@ -84,8 +95,19 @@ public class Flat implements Serializable {
     }
 
     @Exclude
+    public void setRegionReference(Region regionReference) {
+        this.regionReference = regionReference;
+    }
+
+    @Nullable
+    @Exclude
+    public Region getRegionReference() {
+        return regionReference;
+    }
+
+    @Exclude
     public Flat copy() {
-        return new Flat(id, name, type, image, description, regionId);
+        return new Flat(id, name, type, image, description, regionId, price);
     }
 
     @Exclude

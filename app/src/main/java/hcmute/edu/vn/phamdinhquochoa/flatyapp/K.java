@@ -9,6 +9,7 @@ public class K {
         public static final String NOTIFICATIONS = "notifications";
         public static final String REGIONS = "regions";
         public static final String USERS = "users";
+        public static final String REQUESTS = "requests";
     }
 
 }

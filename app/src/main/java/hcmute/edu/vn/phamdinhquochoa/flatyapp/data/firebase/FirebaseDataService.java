@@ -6,6 +6,7 @@ import hcmute.edu.vn.phamdinhquochoa.flatyapp.data.AuthData;
 import hcmute.edu.vn.phamdinhquochoa.flatyapp.data.DataService;
 import hcmute.edu.vn.phamdinhquochoa.flatyapp.data.FavoriteFlatData;
 import hcmute.edu.vn.phamdinhquochoa.flatyapp.data.FavoriteRegionData;
+import hcmute.edu.vn.phamdinhquochoa.flatyapp.data.FeedbackRequestData;
 import hcmute.edu.vn.phamdinhquochoa.flatyapp.data.FlatData;
 import hcmute.edu.vn.phamdinhquochoa.flatyapp.data.ImageStorage;
 import hcmute.edu.vn.phamdinhquochoa.flatyapp.data.NotificationData;
@@ -23,6 +24,7 @@ public class FirebaseDataService implements DataService {
     private final AuthData authData;
     private final UserData userData;
     private final ImageStorage imageStorage;
+    private final FeedbackRequestData feedbackRequestData;
 
     public FirebaseDataService() {
         database = FirebaseFirestore.getInstance();
@@ -34,6 +36,7 @@ public class FirebaseDataService implements DataService {
         authData = new AuthDataImpl(this::getDatabase);
         userData = new UserDataImpl(this::getDatabase);
         imageStorage = new ImageStorageImpl();
+        feedbackRequestData = new FeedbackRequestDataImpl(this::getDatabase);
     }
 
     public FirebaseFirestore getDatabase() {
@@ -78,5 +81,10 @@ public class FirebaseDataService implements DataService {
     @Override
     public ImageStorage getImageStorage() {
         return imageStorage;
+    }
+
+    @Override
+    public FeedbackRequestData getFeedbackRequestData() {
+        return feedbackRequestData;
     }
 }

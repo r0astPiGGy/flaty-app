@@ -34,7 +34,6 @@ public class CategoryActivity extends AppCompatActivity {
     private ActivityCategoryBinding binding;
     private LinearLayout FlatCartContainer;
     private Intent intent_get_data;
-    private String regionId;
     private Region region;
 
     @Override
@@ -72,23 +71,10 @@ public class CategoryActivity extends AppCompatActivity {
         }
 
         // Region data
-        regionId = intent_get_data.getStringExtra("RegionId");
-
-        if(regionId == null) {
-            binding.layoutRegionInformation.setVisibility(View.GONE);
-            return;
-        }
-
-        LiveData<Region> regionLiveData = DataAccess.getDataService().getRegionData().getRegionById(regionId);
-
-        regionLiveData.observe(this, this::onRegionLoaded);
-        binding.buttonAddFlat.setOnClickListener(v -> onFlatAddClicked());
-    }
-
-    private void onRegionLoaded(Region region) {
-        this.region = region;
+        region = (Region) intent_get_data.getSerializableExtra("Region");
         updateRegionInfo();
         updateFlatData();
+        binding.buttonAddFlat.setOnClickListener(v -> onFlatAddClicked());
     }
 
     private void updateRegionInfo() {
@@ -120,7 +106,7 @@ public class CategoryActivity extends AppCompatActivity {
     private void onFlatAddClicked() {
         Intent intent = new Intent(this, FlatEditActivity.class);
         Flat flat = new Flat();
-        flat.setRegionId(regionId);
+        flat.setRegionId(flat.getRegionId());
         flat.setType("default");
 
         FlatEditActivity.applyIntentForAdd(intent, flat);

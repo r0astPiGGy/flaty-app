@@ -14,6 +14,7 @@ import hcmute.edu.vn.phamdinhquochoa.flatyapp.beans.Notify;
 import hcmute.edu.vn.phamdinhquochoa.flatyapp.beans.User;
 import hcmute.edu.vn.phamdinhquochoa.flatyapp.dao.DataAccess;
 import hcmute.edu.vn.phamdinhquochoa.flatyapp.data.DataService;
+import hcmute.edu.vn.phamdinhquochoa.flatyapp.view.AsyncButton;
 
 public class RegisterActivity extends AppCompatActivity {
     private EditText txtUsername, txtPassword, txtPasswordConfirm;
@@ -32,8 +33,8 @@ public class RegisterActivity extends AppCompatActivity {
         txtPassword = findViewById(R.id.editText_password_signup);
         txtPasswordConfirm = findViewById(R.id.editText_password_signup_confirm);
 
-        Button btnSignup = findViewById(R.id.button_signup_signup);
-        btnSignup.setOnClickListener(view -> onRegisterButtonClicked());
+        AsyncButton btnSignup = findViewById(R.id.button_signup_signup);
+        btnSignup.setOnClickListener(view -> onRegisterButtonClicked(btnSignup));
 
         Button btnLogin = findViewById(R.id.button_login_signup);
         btnLogin.setOnClickListener(view -> finish());
@@ -61,14 +62,22 @@ public class RegisterActivity extends AppCompatActivity {
         confirm = txtPasswordConfirm.getText().toString().trim();
     }
 
-    private void onRegisterButtonClicked() {
+    private void onRegisterButtonClicked(AsyncButton button) {
         if (inputInvalid()) return;
+
+        button.enableWaitMode();
 
         DataAccess.getDataService()
                 .getAuthData()
                 .register(username, password)
-                .addOnCompleteListener(this::onUserRegistered)
-                .addOnFailureListener(this::onRegistrationFailed);
+                .addOnCompleteListener(() -> {
+                    button.disableWaitMode();
+                    onUserRegistered();
+                })
+                .addOnFailureListener(e -> {
+                    button.disableWaitMode();
+                    onRegistrationFailed(e);
+                });
     }
 
     private void onUserRegistered() {
@@ -97,6 +106,6 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void onRegistrationFailed(Throwable e) {
         e.printStackTrace();
-        Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
     }
 }

@@ -82,7 +82,7 @@
             android:textColorHint="#000000"
             android:textSize="18sp" />
 
-        <Button
+        <hcmute.edu.vn.phamdinhquochoa.flatyapp.view.AsyncButton
             android:id="@+id/button_signup_signup"
             android:layout_width="285sp"
             android:layout_height="wrap_content"

@@ -19,6 +19,7 @@ import hcmute.edu.vn.phamdinhquochoa.flatyapp.data.AuthData;
 import hcmute.edu.vn.phamdinhquochoa.flatyapp.data.DataService;
 import hcmute.edu.vn.phamdinhquochoa.flatyapp.data.UserData;
 import hcmute.edu.vn.phamdinhquochoa.flatyapp.data.firebase.FirebaseDataService;
+import hcmute.edu.vn.phamdinhquochoa.flatyapp.view.AsyncButton;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -52,8 +53,8 @@ public class LoginActivity extends AppCompatActivity {
         txtUsername = findViewById(R.id.editText_username_login);
         isAdminCheckbox = findViewById(R.id.checkbox_is_admin);
 
-        Button btnLogin = findViewById(R.id.button_login_login);
-        btnLogin.setOnClickListener(view -> onLoginButtonClicked());
+        AsyncButton btnLogin = findViewById(R.id.button_login_login);
+        btnLogin.setOnClickListener(view -> onLoginButtonClicked(btnLogin));
 
         Button btnSignup = findViewById(R.id.button_signup_login);
         btnSignup.setOnClickListener(view -> onRegisterButtonClicked());
@@ -76,20 +77,22 @@ public class LoginActivity extends AppCompatActivity {
         isAdmin = isAdminCheckbox.isChecked();
     }
 
-    private void onLoginButtonClicked() {
+    private void onLoginButtonClicked(AsyncButton button) {
         if (inputInvalid()) return;
 
+        button.enableWaitMode();
         DataAccess.getDataService()
                 .getAuthData()
                 .signIn(email, password)
-                .addOnCompleteListener(this::loginSuccess)
+                .addOnCompleteListener(() -> loginSuccess(button))
                 .addOnFailureListener(e -> {
+                    button.disableWaitMode();
                     e.printStackTrace();
                     Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
                 });
     }
 
-    private void loginSuccess() {
+    private void loginSuccess(AsyncButton button) {
         sharedPreferences.edit()
                 .putString("username", email)
                 .putString("password", password)
@@ -104,6 +107,7 @@ public class LoginActivity extends AppCompatActivity {
 
         userData.getUserById(authData.getUserId()).thenAccept(user -> {
             user.setRole(role);
+            button.disableWaitMode();
 
             userData.updateUser(user);
 
