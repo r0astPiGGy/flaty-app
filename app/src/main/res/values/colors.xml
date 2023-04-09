@@ -15,4 +15,5 @@
     <color name="yellow">#FFC107</color>
     <color name="login">#6AC5CA</color>
     <color name="register">#CC4848</color>
+    <color name="delete">#CC4848</color>
 </resources>

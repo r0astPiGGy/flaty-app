@@ -13,6 +13,8 @@ public interface RegionData {
 
     DataTask updateRegion(Region region);
 
+    DataTask deleteRegion(Region region);
+
     LiveData<Region> getRegionById(String id);
 
     LiveData<List<Region>> getRegionsByIds(List<String> ids);

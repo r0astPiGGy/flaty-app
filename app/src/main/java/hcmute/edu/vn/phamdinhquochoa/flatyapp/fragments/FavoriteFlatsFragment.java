@@ -12,6 +12,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.google.common.collect.Lists;
+
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -102,6 +105,7 @@ public class FavoriteFlatsFragment extends Fragment implements SwipeRefreshLayou
         List<String> flatIds = favoriteFlats.stream().map(FavoriteFlat::getFlatId).collect(Collectors.toList());
 
         if(flatIds.isEmpty()) {
+            adapter.setFlats(Collections.emptyList());
             refreshLayout.setRefreshing(false);
             return;
         }

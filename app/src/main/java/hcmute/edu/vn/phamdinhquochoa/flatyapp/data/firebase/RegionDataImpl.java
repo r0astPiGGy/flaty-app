@@ -44,6 +44,22 @@ public class RegionDataImpl extends FirebaseDataContext implements RegionData {
         return task;
     }
 
+    @Override
+    public DataTask deleteRegion(Region region) {
+        DataTask.Invokable task = createTask();
+
+        db().collection(K.Collections.REGIONS)
+                .document(region.getId())
+                .delete()
+                .addOnSuccessListener(t -> {
+                    deleteFavoriteRegions(region);
+                    deleteRegionImage(task, region);
+                })
+                .addOnFailureListener(task::invokeOnFailure);
+
+        return task;
+    }
+
     private void updateRegionImage(DataTask.Invokable task, Region region) {
         DataAccess.getDataService()
                 .getImageStorage()
@@ -55,6 +71,25 @@ public class RegionDataImpl extends FirebaseDataContext implements RegionData {
                         task.invokeOnFailure(exception);
                     }
                 });
+    }
+
+    private void deleteRegionImage(DataTask.Invokable task, Region region) {
+        DataAccess.getDataService()
+                .getImageStorage()
+                .deleteImageByUri(region.getId())
+                .whenComplete((Null, exception) -> {
+                    if (exception == null) {
+                        task.invokeOnComplete();
+                    } else {
+                        task.invokeOnFailure(exception);
+                    }
+                });
+    }
+
+    private void deleteFavoriteRegions(Region region) {
+        DataAccess.getDataService()
+                .getFavoriteRegionData()
+                .removeFavoritesByRegionId(region.getId());
     }
 
     @Override

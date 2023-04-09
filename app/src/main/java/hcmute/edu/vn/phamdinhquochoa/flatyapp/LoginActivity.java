@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -13,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import hcmute.edu.vn.phamdinhquochoa.Flatyapp.R;
+import hcmute.edu.vn.phamdinhquochoa.Flatyapp.databinding.ActivityLoginBinding;
 import hcmute.edu.vn.phamdinhquochoa.flatyapp.beans.User;
 import hcmute.edu.vn.phamdinhquochoa.flatyapp.dao.DataAccess;
 import hcmute.edu.vn.phamdinhquochoa.flatyapp.data.AuthData;
@@ -24,13 +24,13 @@ import hcmute.edu.vn.phamdinhquochoa.flatyapp.view.AsyncButton;
 public class LoginActivity extends AppCompatActivity {
 
     public static final String PREFERENCES = "store_info" ;
+
+    private ActivityLoginBinding binding;
     private SharedPreferences sharedPreferences;
     private EditText txtUsername, txtPassword;
-    private CheckBox isAdminCheckbox;
 
     private String email;
     private String password;
-    private boolean isAdmin;
 
     static {
         DataAccess.setDataService(new FirebaseDataService());
@@ -39,22 +39,26 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
 
-        referenceComponent();
+        binding = ActivityLoginBinding.inflate(getLayoutInflater());
+
+        setContentView(binding.getRoot());
+
+        initViews();
         sharedPreferences = getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
         txtUsername.setText(sharedPreferences.getString("username", ""));
         txtPassword.setText(sharedPreferences.getString("password", ""));
-        isAdminCheckbox.setChecked(sharedPreferences.getBoolean("admin", false));
     }
 
-    private void referenceComponent(){
+    private void initViews(){
         txtPassword = findViewById(R.id.editText_password_login);
         txtUsername = findViewById(R.id.editText_username_login);
-        isAdminCheckbox = findViewById(R.id.checkbox_is_admin);
 
-        AsyncButton btnLogin = findViewById(R.id.button_login_login);
-        btnLogin.setOnClickListener(view -> onLoginButtonClicked(btnLogin));
+        AsyncButton buttonLoginAsAdmin = binding.buttonLoginAsAdmin;
+        buttonLoginAsAdmin.setOnClickListener(view -> onLoginButtonClicked(User.Role.ADMIN));
+
+        AsyncButton buttonLoginAsUser = binding.buttonLoginAsUser;
+        buttonLoginAsUser.setOnClickListener(view -> onLoginButtonClicked(User.Role.USER));
 
         Button btnSignup = findViewById(R.id.button_signup_login);
         btnSignup.setOnClickListener(view -> onRegisterButtonClicked());
@@ -74,32 +78,38 @@ public class LoginActivity extends AppCompatActivity {
     private void fillInput() {
         email = txtUsername.getText().toString().trim();
         password = txtPassword.getText().toString().trim();
-        isAdmin = isAdminCheckbox.isChecked();
     }
 
-    private void onLoginButtonClicked(AsyncButton button) {
+    private void onLoginButtonClicked(User.Role role) {
         if (inputInvalid()) return;
 
-        button.enableWaitMode();
+        enableWaitMode();
         DataAccess.getDataService()
                 .getAuthData()
                 .signIn(email, password)
-                .addOnCompleteListener(() -> loginSuccess(button))
+                .addOnCompleteListener(() -> loginSuccess(role))
                 .addOnFailureListener(e -> {
-                    button.disableWaitMode();
+                    disableWaitMode();
                     e.printStackTrace();
                     Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
                 });
     }
 
-    private void loginSuccess(AsyncButton button) {
+    private void enableWaitMode() {
+        binding.buttonLoginAsAdmin.enableWaitMode();
+        binding.buttonLoginAsUser.enableWaitMode();
+    }
+
+    private void disableWaitMode() {
+        binding.buttonLoginAsAdmin.disableWaitMode();
+        binding.buttonLoginAsUser.disableWaitMode();
+    }
+
+    private void loginSuccess(User.Role role) {
         sharedPreferences.edit()
                 .putString("username", email)
                 .putString("password", password)
-                .putBoolean("admin", isAdmin)
                 .apply();
-
-        User.Role role = isAdmin ? User.Role.ADMIN : User.Role.USER;
 
         DataService dataService = DataAccess.getDataService();
         AuthData authData = dataService.getAuthData();
@@ -107,12 +117,11 @@ public class LoginActivity extends AppCompatActivity {
 
         userData.getUserById(authData.getUserId()).thenAccept(user -> {
             user.setRole(role);
-            button.disableWaitMode();
 
             userData.updateUser(user);
-
             authData.setUser(user);
 
+            disableWaitMode();
             Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
             startActivity(intent);
         });

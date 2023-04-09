@@ -14,7 +14,7 @@
             android:name="hcmute.edu.vn.phamdinhquochoa.flatyapp.FlatDetailsActivity"
             android:exported="false" />
         <activity
-            android:name="hcmute.edu.vn.phamdinhquochoa.flatyapp.CategoryActivity"
+            android:name="hcmute.edu.vn.phamdinhquochoa.flatyapp.RegionActivity"
             android:exported="false" />
         <activity
             android:name="hcmute.edu.vn.phamdinhquochoa.flatyapp.HomeActivity"

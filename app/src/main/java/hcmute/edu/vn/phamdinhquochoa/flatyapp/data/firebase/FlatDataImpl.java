@@ -3,11 +3,12 @@ package hcmute.edu.vn.phamdinhquochoa.flatyapp.data.firebase;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
@@ -104,6 +105,48 @@ public class FlatDataImpl extends FirebaseDataContext implements FlatData {
                 }).addOnFailureListener(dataTask::invokeOnFailure);
 
         return dataTask;
+    }
+
+    @Override
+    public DataTask deleteFlatsByRegionId(String regionId) {
+        DataTask.Invokable task = DataTask.createDataTask();
+
+        db().collection(K.Collections.FLATS)
+                .whereEqualTo("regionId", regionId)
+                .get()
+                .addOnSuccessListener(q -> {
+                    List<DocumentReference> references = q.getDocuments().stream()
+                            .map(DocumentSnapshot::getReference)
+                            .collect(Collectors.toList());
+
+                    List<String> flatsById = references.stream()
+                            .map(DocumentReference::getId)
+                            .collect(Collectors.toList());
+
+                    db().runBatch(batch -> {
+                        references.forEach(batch::delete);
+                    }).addOnCompleteListener(t -> {
+                        deleteFlatImagesById(flatsById);
+                        deleteFavoriteFlatsById(flatsById);
+
+                        handleTaskCompletion(t, task);
+                    });
+                })
+                .addOnFailureListener(task::invokeOnFailure);
+
+        return task;
+    }
+
+    private void deleteFlatImagesById(List<String> ids) {
+        DataAccess.getDataService()
+                .getImageStorage()
+                .deleteImagesByUri(ids);
+    }
+
+    private void deleteFavoriteFlatsById(List<String> ids) {
+        DataAccess.getDataService()
+                .getFavoriteFlatData()
+                .removeFavoritesByFlatId(ids);
     }
 
     @Override

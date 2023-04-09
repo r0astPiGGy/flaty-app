@@ -26,8 +26,6 @@ public class FlatDetailsActivity extends AppCompatActivity {
 
     private static final int FLAT_EDIT_REQUEST = 123;
 
-    public static FlatSize FlatSize;
-
     private Flat flat;
     private Region region;
 
@@ -43,6 +41,8 @@ public class FlatDetailsActivity extends AppCompatActivity {
     }
 
     private String getRoundPrice(Double price){
+        if(price == null) return null;
+
         return "Стоимость: " + Math.round(price) + " руб";
     }
 
@@ -60,6 +60,12 @@ public class FlatDetailsActivity extends AppCompatActivity {
 
         binding.buttonEditFlat.setOnClickListener(v -> onEditButtonClicked());
         binding.buttonDeleteFlat.setOnClickListener(v -> onDeleteButtonClicked());
+    }
+
+    @Override
+    public void onBackPressed() {
+        setResult(RESULT_OK);
+        super.onBackPressed();
     }
 
     private void onFavoriteButtonClicked() {
@@ -104,14 +110,21 @@ public class FlatDetailsActivity extends AppCompatActivity {
     }
 
     private void onDeleteButtonClicked() {
+        binding.buttonDeleteFlat.enableWaitMode();
         DataAccess.getDataService()
                 .getFlatData()
                 .deleteFlatById(flat.getId())
-                .addOnCompleteListener(this::onFlatDeleted);
+                .addOnCompleteListener(this::onFlatDeleted)
+                .addOnFailureListener(this::onFlatDeleteFailure);
     }
 
     private void onFlatDeleted() {
         sync(this::finishActivityAndUpdateFlats);
+    }
+
+    private void onFlatDeleteFailure(Throwable throwable) {
+        binding.buttonDeleteFlat.disableWaitMode();
+        Toast.makeText(this, throwable.getLocalizedMessage(), Toast.LENGTH_LONG).show();
     }
 
     private void sync(Runnable task) {
@@ -141,10 +154,10 @@ public class FlatDetailsActivity extends AppCompatActivity {
         binding.tvDescription.setText(flat.getDescription());
         updateFlatImage();
 
-        binding.tvRegionName.setText(String.format("Название региона \n%s", region.getName()));
+        binding.tvRegionName.setText(String.format("Название района \n%s", region.getName()));
         binding.tvRegionAddress.setText(String.format("Адрес \n%s", region.getAddress()));
 
-        tvPrice.setText(getRoundPrice(FlatSize.getPrice()));
+        tvPrice.setText(getRoundPrice(flat.getPrice()));
     }
 
     private void updateFlatImage() {

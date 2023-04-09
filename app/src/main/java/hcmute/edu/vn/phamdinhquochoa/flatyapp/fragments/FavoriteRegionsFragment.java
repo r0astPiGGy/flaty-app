@@ -2,7 +2,6 @@ package hcmute.edu.vn.phamdinhquochoa.flatyapp.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.preference.PreferenceScreen;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,11 +12,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import hcmute.edu.vn.phamdinhquochoa.Flatyapp.databinding.FragmentFavoriteRegionsBinding;
-import hcmute.edu.vn.phamdinhquochoa.flatyapp.CategoryActivity;
+import hcmute.edu.vn.phamdinhquochoa.flatyapp.RegionActivity;
 import hcmute.edu.vn.phamdinhquochoa.flatyapp.adapter.FavoriteRegionViewAdapter;
 import hcmute.edu.vn.phamdinhquochoa.flatyapp.beans.FavoriteRegion;
 import hcmute.edu.vn.phamdinhquochoa.flatyapp.beans.Region;
@@ -49,7 +49,7 @@ public class FavoriteRegionsFragment extends Fragment implements SwipeRefreshLay
         binding.recyclerView.setAdapter(adapter);
 
         adapter.setOnRegionClickedListener(region -> {
-            Intent intent = new Intent(getActivity(), CategoryActivity.class);
+            Intent intent = new Intent(getActivity(), RegionActivity.class);
             intent.putExtra("Region", region);
             startActivity(intent);
         });
@@ -58,10 +58,10 @@ public class FavoriteRegionsFragment extends Fragment implements SwipeRefreshLay
                     .getFavoriteRegionData()
                     .removeFavorite(region.getId())
                     .addOnCompleteListener(() -> {
-                        Toast.makeText(getContext(), "Регион успешо удалён из избранных", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Район успешо удалён из избранных", Toast.LENGTH_SHORT).show();
                     }).addOnFailureListener(e -> {
                         e.printStackTrace();
-                        Toast.makeText(getContext(), "Произошла ошибка удалении региона!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Произошла ошибка удалении района!", Toast.LENGTH_SHORT).show();
                     });
 
             callback.delete();
@@ -90,6 +90,7 @@ public class FavoriteRegionsFragment extends Fragment implements SwipeRefreshLay
         List<String> regionIds = favoriteRegions.stream().map(FavoriteRegion::getRegionId).collect(Collectors.toList());
 
         if(regionIds.isEmpty()) {
+            adapter.setRegions(Collections.emptyList());
             refreshLayout.setRefreshing(false);
             return;
         }

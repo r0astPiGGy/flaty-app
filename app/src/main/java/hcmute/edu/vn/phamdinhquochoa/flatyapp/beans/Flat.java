@@ -12,24 +12,22 @@ public class Flat implements Serializable {
 
     private String id;
     private String name;
-    private String type;
     @Exclude
     private byte[] image;
     private String description;
     private String regionId;
-    private String price;
+    private Double price;
 
     @Exclude
     private Region regionReference;
 
     public Flat() {
-        this(UUID.randomUUID().toString(), "Unnamed", null, null, "No description", null, null);
+        this(UUID.randomUUID().toString(), "Unnamed", null, "No description", null, null);
     }
 
-    public Flat(String id, String name, String type, byte[] image, String description, String RegionId, String price) {
+    public Flat(String id, String name, byte[] image, String description, String RegionId, Double price) {
         this.id = id;
         this.name = name;
-        this.type = type;
         this.image = image;
         this.description = description;
         this.regionId = RegionId;
@@ -52,19 +50,11 @@ public class Flat implements Serializable {
         this.name = name;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
@@ -107,7 +97,7 @@ public class Flat implements Serializable {
 
     @Exclude
     public Flat copy() {
-        return new Flat(id, name, type, image, description, regionId, price);
+        return new Flat(id, name, image, description, regionId, price);
     }
 
     @Exclude

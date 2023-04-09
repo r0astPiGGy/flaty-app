@@ -3,10 +3,12 @@ package hcmute.edu.vn.phamdinhquochoa.flatyapp.data.firebase;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
@@ -53,6 +55,29 @@ public class FavoriteRegionDataImpl extends FirebaseDataContext implements Favor
                 }).addOnFailureListener(task::invokeOnFailure);
 
         return task;
+    }
+
+    @Override
+    public CompletableFuture<Void> removeFavoritesByRegionId(String id) {
+        CompletableFuture<Void> completableFuture = new CompletableFuture<>();
+
+        db().collection(K.Collections.FAVORITE_REGIONS)
+                .whereEqualTo("regionId", id)
+                .get()
+                .addOnSuccessListener(q -> {
+                    List<DocumentReference> list = q.getDocuments()
+                            .stream()
+                            .map(DocumentSnapshot::getReference)
+                            .collect(Collectors.toList());
+
+                    db().runBatch(batch -> {
+                        list.forEach(batch::delete);
+                    }).addOnSuccessListener(completableFuture::complete)
+                            .addOnFailureListener(completableFuture::completeExceptionally);
+                })
+                .addOnFailureListener(completableFuture::completeExceptionally);
+
+        return completableFuture;
     }
 
     @Override

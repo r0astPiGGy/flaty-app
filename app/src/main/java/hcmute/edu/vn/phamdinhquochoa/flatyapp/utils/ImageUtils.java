@@ -8,6 +8,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.text.format.Formatter;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -15,22 +16,37 @@ import java.util.Objects;
 
 public class ImageUtils {
 
-    public static Bitmap getResizedBitmap(Bitmap image) {
-        return getResizedBitmap(image, 700);
+    public static byte[] downsizeBitmap(Bitmap fullBitmap) {
+        int width = fullBitmap.getWidth();
+        int height = fullBitmap.getHeight();
+
+        boolean needsDownsize = bitmapNeedsDownsize(fullBitmap);
+
+        if(!needsDownsize) {
+            return convertBitmapToByteArray(fullBitmap);
+        }
+
+        Bitmap bitmap = fullBitmap;
+
+        while(bitmapNeedsDownsize(bitmap)) {
+            bitmap = convertByteArrayToBitmap(getDownsizedImageBytes(bitmap, width /= 2, height /= 2));
+        }
+
+        return convertBitmapToByteArray(bitmap);
     }
 
-    public static Bitmap getResizedBitmap(Bitmap image, int maxSize) {
-        int width = image.getWidth();
-        int height = image.getHeight();
-        final float bitmapRatio = ((float) width) / ((float) height);
-        if (bitmapRatio > 1) {
-            width = maxSize;
-            height = (int) (width / bitmapRatio);
-        } else {
-            height = maxSize;
-            width = (int) (height * bitmapRatio);
-        }
-        return Bitmap.createScaledBitmap(image, width, height, true);
+    public static boolean bitmapNeedsDownsize(Bitmap bitmap) {
+        return bitmap.getByteCount() > 800 * 1024;
+    }
+
+    public static byte[] getDownsizedImageBytes(Bitmap fullBitmap, int scaleWidth, int scaleHeight) {
+
+        Bitmap scaledBitmap = Bitmap.createScaledBitmap(fullBitmap, scaleWidth, scaleHeight, true);
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        scaledBitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+
+        return outputStream.toByteArray();
     }
 
     public static byte[] getByteArrayFromUri(ContentResolver resolver, Uri uri) {
@@ -65,7 +81,7 @@ public class ImageUtils {
     }
 
     public static byte[] resizeAndConvertDrawable(Drawable drawable) {
-        return convertBitmapToByteArray(getResizedBitmap(getBitmapFromDrawable(drawable)));
+        return downsizeBitmap(getBitmapFromDrawable(drawable));
     }
 
     public static byte[] convertDrawableToByteArray(Drawable drawable){

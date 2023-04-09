@@ -1,5 +1,7 @@
 package hcmute.edu.vn.phamdinhquochoa.flatyapp;
 
+import static com.google.common.base.Strings.isNullOrEmpty;
+import static java.util.Objects.isNull;
 import static hcmute.edu.vn.phamdinhquochoa.flatyapp.utils.EditTextUtils.getInputOrNull;
 
 import android.content.Intent;
@@ -36,6 +38,7 @@ public class FlatEditActivity extends AppCompatActivity {
     private byte[] image;
     private String name;
     private String description;
+    private Double price;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,9 +64,11 @@ public class FlatEditActivity extends AppCompatActivity {
         name = flat.getName();
         description = flat.getDescription();
         image = flat.getImage();
+        price = flat.getPrice();
 
         binding.editTextFlatName.setText(name);
         binding.editTextFlatDescription.setText(description);
+        binding.editTextFlatPrice.setText(price != null ? String.valueOf(price) : null);
         if(image != null) {
             binding.image.setImageBitmap(ImageUtils.convertByteArrayToBitmap(image));
         }
@@ -108,6 +113,11 @@ public class FlatEditActivity extends AppCompatActivity {
 
         name = getInputOrNull(binding.editTextFlatName);
         description = getInputOrNull(binding.editTextFlatDescription);
+        String rawPrice = getInputOrNull(binding.editTextFlatPrice);
+
+        if(rawPrice == null) return;
+
+        price = Double.parseDouble(rawPrice);
     }
 
     private boolean isUserInputValid() {
@@ -116,12 +126,17 @@ public class FlatEditActivity extends AppCompatActivity {
             return false;
         }
 
-        if(name == null || name.isEmpty()) {
+        if(isNullOrEmpty(name)) {
             showToast(R.string.fill_name);
             return false;
         }
 
-        if(description == null || description.isEmpty()) {
+        if(isNull(price)) {
+            showToast(R.string.fill_price);
+            return false;
+        }
+
+        if(isNullOrEmpty(description)) {
             showToast(R.string.fill_description);
             return false;
         }
@@ -142,6 +157,7 @@ public class FlatEditActivity extends AppCompatActivity {
 
         flat.setName(name);
         flat.setDescription(description);
+        flat.setPrice(price);
         flat.setImage(image);
 
         Intent result = new Intent();

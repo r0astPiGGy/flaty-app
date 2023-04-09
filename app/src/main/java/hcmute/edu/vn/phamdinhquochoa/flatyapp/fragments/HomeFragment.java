@@ -21,7 +21,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import java.util.List;
 
 import hcmute.edu.vn.phamdinhquochoa.Flatyapp.databinding.FragmentHomeBinding;
-import hcmute.edu.vn.phamdinhquochoa.flatyapp.CategoryActivity;
+import hcmute.edu.vn.phamdinhquochoa.flatyapp.RegionActivity;
 import hcmute.edu.vn.phamdinhquochoa.flatyapp.RegionEditActivity;
 import hcmute.edu.vn.phamdinhquochoa.flatyapp.adapter.RegionViewAdapter;
 import hcmute.edu.vn.phamdinhquochoa.flatyapp.beans.Region;
@@ -35,6 +35,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     private Button addRegionButton;
 
     private final static int ADD_REGION_RC = 0;
+    private final static int SYNC_RC = 1;
 
     public HomeFragment() {
     }
@@ -58,20 +59,20 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         binding.regionRecyclerView.setAdapter(adapter);
 
         adapter.setOnRegionClickedListener(region -> {
-            intent = new Intent(getActivity(), CategoryActivity.class);
+            intent = new Intent(getActivity(), RegionActivity.class);
             intent.putExtra("Region", region);
-            startActivity(intent);
+            startActivityForResult(intent, SYNC_RC);
         });
         adapter.setOnRegionSaveButtonClickedListener(region -> {
             DataAccess.getDataService()
                     .getFavoriteRegionData()
                     .addFavorite(region.getId())
                     .addOnCompleteListener(() -> {
-                        Toast.makeText(getContext(), "Сохранение информации о регионе прошло успешно!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Район успешно добавлен в избранные!", Toast.LENGTH_SHORT).show();
                     })
                     .addOnFailureListener(e -> {
                         e.printStackTrace();
-                        Toast.makeText(getContext(), "Произошла ошибка при сохранении информации!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "При добавлении района в избранные произошла ошибка.", Toast.LENGTH_SHORT).show();
                     });
         });
 
@@ -92,7 +93,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             @Override
             public boolean onQueryTextSubmit(String s) {
                 String textSearch = searchBar.getQuery().toString();
-                intent = new Intent(getActivity(), CategoryActivity.class);
+                intent = new Intent(getActivity(), RegionActivity.class);
                 intent.putExtra("nameFlat", textSearch);
                 startActivity(intent);
                 return false;
@@ -141,6 +142,11 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                     .getRegionData()
                     .addRegion(region)
                     .addOnCompleteListener(this::updateRegions);
+        }
+
+        if(requestCode == SYNC_RC) {
+            binding.swipeRefreshLayout.setRefreshing(true);
+            updateRegions();
         }
     }
 

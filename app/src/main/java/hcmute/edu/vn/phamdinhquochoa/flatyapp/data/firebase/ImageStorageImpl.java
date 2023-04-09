@@ -1,14 +1,15 @@
 package hcmute.edu.vn.phamdinhquochoa.flatyapp.data.firebase;
 
-import android.net.Uri;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
 
 import hcmute.edu.vn.phamdinhquochoa.flatyapp.data.ImageStorage;
 
@@ -29,6 +30,8 @@ public class ImageStorageImpl implements ImageStorage {
     public CompletableFuture<Void> updateImageByUri(byte[] image, String uri) {
         CompletableFuture<Void> task = new CompletableFuture<>();
 
+        Objects.requireNonNull(image);
+
         db().child(uri)
                 .putBytes(image)
                 .addOnSuccessListener(t -> task.complete(null))
@@ -47,6 +50,36 @@ public class ImageStorageImpl implements ImageStorage {
                 .addOnFailureListener(task::completeExceptionally);
 
         return task;
+    }
+
+    @Override
+    public CompletableFuture<Void> deleteImagesByUri(List<String> uris) {
+        CompletableFuture<Void> completableFuture = new CompletableFuture<>();
+
+        db().listAll().addOnSuccessListener(listResult -> {
+            List<StorageReference> refs = listResult.getItems()
+                    .stream()
+                    .filter(r -> {
+                        String uri = r.getName();
+                        return uris.contains(uri);
+                    })
+                    .collect(Collectors.toList());
+
+            if(refs.isEmpty()) {
+                completableFuture.complete(null);
+                return;
+            }
+
+            refs.forEach(storageReference -> {
+                storageReference
+                        .delete()
+                        .addOnSuccessListener(completableFuture::complete)
+                        .addOnFailureListener(completableFuture::completeExceptionally);
+            });
+
+        }).addOnFailureListener(completableFuture::completeExceptionally);
+
+        return completableFuture;
     }
 
     @Override

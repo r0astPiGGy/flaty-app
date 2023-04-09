@@ -18,16 +18,15 @@ import hcmute.edu.vn.phamdinhquochoa.flatyapp.dao.DataAccess;
 
 public class RequestsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    private FragmentRequestsBinding binding;
-
     private final RequestViewAdapter adapter = new RequestViewAdapter();
+    private FragmentRequestsBinding binding;
 
     public RequestsFragment() {}
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentRequestsBinding.inflate(inflater);
+        binding = FragmentRequestsBinding.inflate(inflater, container, false);
         initViews();
 
         return binding.getRoot();
@@ -36,8 +35,10 @@ public class RequestsFragment extends Fragment implements SwipeRefreshLayout.OnR
     private void initViews() {
         binding.requestRecyclerView.setAdapter(adapter);
 
-        SwipeRefreshLayout refreshLayout = binding.swipeRefreshLayout;
+        initRefreshLayout(binding.swipeRefreshLayout);
+    }
 
+    private void initRefreshLayout(SwipeRefreshLayout refreshLayout) {
         refreshLayout.setOnRefreshListener(this);
         refreshLayout.post(() -> {
             refreshLayout.setRefreshing(true);

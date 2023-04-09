@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:weightSum="10"
     android:orientation="vertical"
     tools:context="hcmute.edu.vn.phamdinhquochoa.flatyapp.FlatDetailsActivity">
@@ -41,7 +42,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="4"
-        android:src="@drawable/region1"/>
+        android:src="@drawable/empty_image"/>
     <LinearLayout
         android:id="@+id/admin_editor_bar"
         android:layout_width="wrap_content"
@@ -56,8 +57,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:background="@drawable/bg_noodle"
-            android:fontFamily="@font/noto_sans_bold"
+            android:fontFamily="@font/notop_sans_regular"
             android:padding="10dp"
             android:layout_marginEnd="10dp"
             android:minWidth="150dp"
@@ -65,15 +65,15 @@
             android:textColor="@color/black"
             android:textSize="15sp" />
 
-        <Button
+        <hcmute.edu.vn.phamdinhquochoa.flatyapp.view.AsyncButton
             android:id="@+id/button_delete_flat"
             android:layout_width="wrap_content"
             android:minWidth="150dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:background="@drawable/bg_box_rounded_red"
-            android:fontFamily="@font/noto_sans_bold"
+            android:fontFamily="@font/notop_sans_regular"
             android:padding="10dp"
+            android:backgroundTint="@color/delete"
             android:text="@string/delete_flat"
             android:textColor="@color/black"
             android:textSize="15sp" />
@@ -166,14 +166,14 @@
             android:gravity="center"
             android:layout_width="0dp"
             android:layout_height="match_parent">
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:layout_marginStart="10dp"
                 android:id="@+id/btnSavedFlat"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:padding="5dp"
-                android:background="@drawable/saved_icon"
-                android:backgroundTint="@color/choose_color"/>
+                app:backgroundTint="@color/register"
+                android:background="@drawable/saved_icon" />
         </LinearLayout>
     </LinearLayout>
 

@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:weightSum="10"
-    tools:context=".PaymentActivity">
+    tools:context="hcmute.edu.vn.phamdinhquochoa.flatyapp.UserInformationActivity">
     <LinearLayout
         android:layout_width="match_parent"
         android:gravity="center"
@@ -176,11 +176,9 @@
             android:layout_weight="1"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="5dp"
-            android:background="@drawable/bg_milktea"
-            android:textColor="@color/white"
             android:text="@string/change"
+            android:textColor="@color/black"
             android:layout_height="wrap_content"
-            style="?android:attr/buttonBarButtonStyle"
             tools:ignore="NestedWeights" />
         <Button
             android:id="@+id/btnCancelChangeUserInformation"
@@ -188,10 +186,9 @@
             android:layout_weight="1"
             android:layout_marginStart="5dp"
             android:layout_marginEnd="10dp"
-            android:background="@drawable/bg_cake"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/register"
             android:text="@string/cancel"
-            android:layout_height="wrap_content"
-            style="?android:attr/buttonBarButtonStyle" />
+            android:layout_height="wrap_content" />
     </LinearLayout>
 </LinearLayout>

@@ -18,6 +18,8 @@ public interface FlatData {
 
     DataTask deleteFlatById(String id);
 
+    DataTask deleteFlatsByRegionId(String regionId);
+
     DataTask updateFlat(Flat flat);
 
     LiveData<List<Flat>> getAllFlats();

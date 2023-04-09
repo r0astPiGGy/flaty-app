@@ -13,7 +13,7 @@
     <string name="login_failed">"Login failed"</string>
     <string name="dang_nhap_uppercase">АВТОРИЗОВАТЬСЯ</string>
     <string name="dang_ky_uppercase">РЕГИСТРАЦИЯ</string>
-    <string name="hint_username">Имя аккаунта</string>
+    <string name="hint_username">Почта</string>
     <string name="hint_password">Пароль</string>
 
     <string name="choose_image">Укажите изображение</string>
@@ -21,13 +21,13 @@
     <string name="fill_description">Укажите описание квартиры</string>
     <string name="fill_price">Укажите цену квартиры</string>
 
-    <string name="fill_region_phone">Укажите мобильный номер региона</string>
-    <string name="fill_region_name">Укажите название региона</string>
-    <string name="fill_region_address">Укажите адрес региона</string>
+    <string name="fill_region_phone">Укажите мобильный номер района</string>
+    <string name="fill_region_name">Укажите название района</string>
+    <string name="fill_region_address">Укажите адрес района</string>
 
     <string name="hint_phone">0984 349 xxx</string>
     <string name="phone_example">+375441234567</string>
-    <string name="address">Дата</string>
+    <string name="address">Адрес</string>
 
     <string name="fill_blanks">Заполните все поля!</string>
     <string name="request_sent">Заявка успешно отправлена</string>
@@ -48,7 +48,9 @@
     <string name="send_request">Отправить</string>
     <string name="cancel_request">Отменить</string>
 
-    <string name="dang_nhap">Авторизоваться</string>
+    <string name="login_as_user">Пользователь</string>
+    <string name="login_as_admin">Администратор</string>
+    <string name="auth">Авторизация</string>
     <string name="register">Регистрация</string>
     <string name="e_mail">E-mail</string>
     <string name="password_confirm_hint">Повторите пароль</string>
@@ -111,7 +113,7 @@
     <string name="chat">Обратная связь</string>
     <string name="chat_requests">Заявки</string>
     <string name="notify">УВЕДОМЛЕНИЯ</string>
-    <string name="account">УЧЕТНАЯ ЗАПИСЬ</string>
+    <string name="account">Учетная запись</string>
     <string name="apps">Общие</string>
     <string name="my">Мои</string>
     <string name="back">Назад</string>
@@ -150,20 +152,20 @@
     <string name="flat_price_hint">Цена</string>
     <string name="flat_price_card">Цена:</string>
     <string name="choose_flat_image">Выбрать изображение</string>
-    <string name="activity_region_edit_text_edit">Редактировать регион</string>
-    <string name="activity_region_edit_text_add">Добавить регион</string>
+    <string name="activity_region_edit_text_edit">Редактировать район</string>
+    <string name="activity_region_edit_text_add">Добавить район</string>
     <string name="activity_region_edit_button_edit">Сохранить</string>
     <string name="activity_region_edit_button_add">Добавить</string>
-    <string name="region_name">Название региона</string>
+    <string name="region_name">Название района</string>
     <string name="region_name_hint">Название</string>
-    <string name="region_address">Адрес региона</string>
+    <string name="region_address">Адрес района</string>
     <string name="region_address_hint">Адрес</string>
-    <string name="region_phone">Мобильный номер региона</string>
+    <string name="region_phone">Мобильный номер района</string>
     <string name="region_phone_hint">Номер</string>
     <string name="choose_region_image">Выбрать изображение</string>
     <string name="Flat">Квартира</string>
     <string name="saved">СОХРАНЕНО</string>
-    <string name="Regions">Регион</string>
+    <string name="Regions">Район</string>
     <string name="payment">ОПЛАТИТЬ</string>
     <string name="payment_lower">Платить</string>
     <string name="full_name">Имя и фамилия</string>
@@ -177,6 +179,11 @@
     <string name="logout">Выйти</string>
     <string name="title">Заголовок</string>
     <string name="content">Содержание</string>
+
+    <string name="alert_delete_region_title">Удаление района</string>
+    <string name="alert_delete_region_msg">При удалении района удалятся все зависимые квартиры. Вы уверены?</string>
+    <string name="alert_delete_region_yes">Да</string>
+    <string name="alert_delete_region_no">Отмена</string>
 
     <string name="home">Главная</string>
     <string name="saved_lower">Избранное</string>

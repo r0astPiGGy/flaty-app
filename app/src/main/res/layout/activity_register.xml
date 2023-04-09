@@ -100,7 +100,7 @@
             android:id="@+id/button_login_signup"
             android:layout_width="285sp"
             android:layout_height="wrap_content"
-            android:text="@string/dang_nhap"
+            android:text="@string/auth"
             android:layout_gravity="center"
             android:paddingTop="15dp"
             android:paddingBottom="15dp"
