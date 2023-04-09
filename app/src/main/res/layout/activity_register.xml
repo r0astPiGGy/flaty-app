@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="hcmute.edu.vn.phamdinhquochoa.flatyapp.RegisterActivity">
+    tools:context="com.rodev.flatyapp.RegisterActivity">
 
     <ImageView
         android:contentDescription="@string/app_name"
@@ -24,8 +24,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/dang_ky_uppercase"
-            android:fontFamily="@font/notop_sans_regular"
+            android:text="@string/register_uppercase"
+            android:fontFamily="@font/noto_sans_regular"
             android:textColor="@color/black"
             android:textSize="24sp"
             android:layout_gravity="center"
@@ -82,7 +82,7 @@
             android:textColorHint="#000000"
             android:textSize="18sp" />
 
-        <hcmute.edu.vn.phamdinhquochoa.flatyapp.view.AsyncButton
+        <com.rodev.flatyapp.view.AsyncButton
             android:id="@+id/button_signup_signup"
             android:layout_width="285sp"
             android:layout_height="wrap_content"
@@ -92,7 +92,7 @@
             android:paddingBottom="15dp"
             android:backgroundTint="@color/register"
             android:textColor="@color/black"
-            android:fontFamily="@font/notop_sans_regular"
+            android:fontFamily="@font/noto_sans_regular"
             android:layout_marginTop="20dp"
             android:textSize="18sp"/>
 
@@ -106,7 +106,7 @@
             android:paddingBottom="15dp"
             android:backgroundTint="@color/login"
             android:textColor="@color/black"
-            android:fontFamily="@font/notop_sans_regular"
+            android:fontFamily="@font/noto_sans_regular"
             android:layout_marginTop="20dp"
             android:textSize="18sp"
             android:layout_marginBottom="45dp"/>

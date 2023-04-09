@@ -11,8 +11,8 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
-    <string name="dang_nhap_uppercase">АВТОРИЗОВАТЬСЯ</string>
-    <string name="dang_ky_uppercase">РЕГИСТРАЦИЯ</string>
+    <string name="auth_uppercase">АВТОРИЗОВАТЬСЯ</string>
+    <string name="register_uppercase">РЕГИСТРАЦИЯ</string>
     <string name="hint_username">Почта</string>
     <string name="hint_password">Пароль</string>
 
@@ -65,17 +65,6 @@
     <string name="default_quantity">1</string>
     <string name="add">+</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
-    <string name="rice">Ребрышки рисовые</string>
-    <string name="hamburger">Сэндвич</string>
-    <string name="milk_tea">Чай с молоком</string>
-    <string name="water_Flat">Блюдо с водой</string>
-    <string name="ice_cream">Пломбир</string>
-    <string name="cake">Кекс</string>
-    <string name="meat_banh_mi">Гамбургеры</string>
-    <string name="egg_banh_mi">Яичный хлеб</string>
     <string name="money_text_short">13.000</string>
     <string name="money_text">13.000</string>
     <string name="example_Flat_describe">Пицца включает в себя много питательных веществ, содержит много клетчатки и вкусного белка, приглашает вас к еде!</string>
@@ -84,12 +73,6 @@
     <string name="example_user_name">Пр Мер Имя</string>
     <string name="example_date">9/5/2022</string>
     <string name="example_size">Стоимость</string>
-    <string name="banh_mi_co_ba">Хлебный магазин Ко Ба</string>
-    <string name="banh_ngot_le_van_viet">Кондитерская Le Van Viet</string>
-    <string name="quan_com_Phuc_Map">Ресторан битого риса Phuc Ma</string>
-    <string name="quan_kem_co_hai">Магазин мороженого мисс Хай</string>
-    <string name="quan_tra_sua">Магазин чая с молоком Coffee House</string>
-    <string name="quan_pho_gia_truyen">Лавка семейной реликвии</string>
 
     <string name="describe">Описание</string>
     <string name="your_information">ПЕРСОНАЛЬНЫЕ ДАННЫЕ</string>
@@ -106,25 +89,13 @@
     <string name="date_of_birth">Дата рождения</string>
     <string name="DoB_hint">Нажмите, чтобы выбрать дату</string>
     <string name="Region_information">Информация о районе</string>
-    <string name="check">ЗАКАЗ</string>
-    <string name="check_coming">Приходящие</string>
-    <string name="history">История</string>
     <string name="cart">Корзина</string>
     <string name="chat">Обратная связь</string>
     <string name="chat_requests">Заявки</string>
     <string name="notify">УВЕДОМЛЕНИЯ</string>
     <string name="account">Учетная запись</string>
-    <string name="apps">Общие</string>
-    <string name="my">Мои</string>
     <string name="back">Назад</string>
-    <string name="size_s">A</string>
-    <string name="size_s_describe">МАЛЕНЬКИЙ</string>
-    <string name="size_m">M</string>
-    <string name="size_m_describe">СРЕДНИЙ</string>
-    <string name="size_l">L</string>
-    <string name="size_l_describe">БОЛЬШОЙ</string>
     <string name="add_to_saved">Сохранить район</string>
-    <string name="add_to_cart">Добавить в корзину</string>
     <string name="total">Общий</string>
     <string name="Flat_type">Квартира</string>
     <string name="activity_flat_edit_text_edit">Редактировать квартиру</string>
@@ -166,16 +137,9 @@
     <string name="Flat">Квартира</string>
     <string name="saved">СОХРАНЕНО</string>
     <string name="Regions">Район</string>
-    <string name="payment">ОПЛАТИТЬ</string>
-    <string name="payment_lower">Платить</string>
     <string name="full_name">Имя и фамилия</string>
     <string name="number_phone">Номер телефона</string>
-    <string name="bill_lower">Чек</string>
-    <string name="bonus_money">Бонус</string>
-    <string name="voucher">Ваучерный кошелек</string>
-    <string name="invite_friend">Пригласить друзей</string>
     <string name="hint">Уведомления</string>
-    <string name="policy_and_secure">Политика и конфиденциальность</string>
     <string name="logout">Выйти</string>
     <string name="title">Заголовок</string>
     <string name="content">Содержание</string>

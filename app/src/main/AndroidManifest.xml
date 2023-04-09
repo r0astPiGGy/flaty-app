@@ -9,27 +9,27 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.flatyApp">
         <activity android:exported="false"
-            android:name="hcmute.edu.vn.phamdinhquochoa.flatyapp.UserInformationActivity" />
+            android:name="com.rodev.flatyapp.UserInformationActivity" />
         <activity
-            android:name="hcmute.edu.vn.phamdinhquochoa.flatyapp.FlatDetailsActivity"
+            android:name="com.rodev.flatyapp.FlatDetailsActivity"
             android:exported="false" />
         <activity
-            android:name="hcmute.edu.vn.phamdinhquochoa.flatyapp.RegionActivity"
+            android:name="com.rodev.flatyapp.RegionActivity"
             android:exported="false" />
         <activity
-            android:name="hcmute.edu.vn.phamdinhquochoa.flatyapp.HomeActivity"
+            android:name="com.rodev.flatyapp.HomeActivity"
             android:exported="false" />
         <activity
-            android:name="hcmute.edu.vn.phamdinhquochoa.flatyapp.RegisterActivity"
+            android:name="com.rodev.flatyapp.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name="hcmute.edu.vn.phamdinhquochoa.flatyapp.FlatEditActivity"
+            android:name="com.rodev.flatyapp.FlatEditActivity"
             android:exported="false" />
         <activity
-            android:name="hcmute.edu.vn.phamdinhquochoa.flatyapp.RegionEditActivity"
+            android:name="com.rodev.flatyapp.RegionEditActivity"
             android:exported="false" />
         <activity
-            android:name="hcmute.edu.vn.phamdinhquochoa.flatyapp.LoginActivity"
+            android:name="com.rodev.flatyapp.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

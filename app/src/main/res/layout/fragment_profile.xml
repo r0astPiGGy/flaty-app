@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="hcmute.edu.vn.phamdinhquochoa.flatyapp.fragments.ProfileFragment"
+    tools:context=".fragments.ProfileFragment"
     android:orientation="vertical">
 
     <LinearLayout
@@ -44,7 +44,7 @@
                 android:layout_height="match_parent"
                 android:text="@string/example_full_name"
                 android:textColor="@color/black"
-                android:fontFamily="@font/notop_sans_regular"
+                android:fontFamily="@font/noto_sans_regular"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:layout_marginStart="20dp"/>
@@ -79,7 +79,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="10dp"
-                android:fontFamily="@font/notop_sans_regular"
+                android:fontFamily="@font/noto_sans_regular"
                 android:gravity="center_vertical"
                 android:text="@string/hint"
                 android:textColor="@color/black"
@@ -103,7 +103,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="10dp"
-                android:fontFamily="@font/notop_sans_regular"
+                android:fontFamily="@font/noto_sans_regular"
                 android:gravity="center_vertical"
                 android:text="@string/logout"
                 android:textColor="@color/black"

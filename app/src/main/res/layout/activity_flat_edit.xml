@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="hcmute.edu.vn.phamdinhquochoa.flatyapp.FlatEditActivity">
+    tools:context="com.rodev.flatyapp.FlatEditActivity">
 
     <TextView
         android:id="@+id/flat_edit_title"
@@ -52,7 +52,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:fontFamily="@font/notop_sans_regular"
+                android:fontFamily="@font/noto_sans_regular"
                 android:minWidth="280dp"
                 android:padding="10dp"
                 android:text="@string/choose_flat_image"
@@ -137,7 +137,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginEnd="35dp"
-            android:fontFamily="@font/notop_sans_regular"
+            android:fontFamily="@font/noto_sans_regular"
             android:minWidth="150dp"
             android:padding="10dp"
             android:text="@string/save_flat"
@@ -149,7 +149,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:fontFamily="@font/notop_sans_regular"
+            android:fontFamily="@font/noto_sans_regular"
             android:minWidth="150dp"
             android:padding="10dp"
             android:text="@string/cancel_flat"

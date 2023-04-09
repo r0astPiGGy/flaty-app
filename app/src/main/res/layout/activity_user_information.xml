@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:weightSum="10"
-    tools:context="hcmute.edu.vn.phamdinhquochoa.flatyapp.UserInformationActivity">
+    tools:context="com.rodev.flatyapp.UserInformationActivity">
     <LinearLayout
         android:layout_width="match_parent"
         android:gravity="center"
@@ -18,7 +18,7 @@
             android:layout_height="match_parent"
             android:text="@string/your_information"
             android:textColor="@color/white"
-            android:fontFamily="@font/notop_sans_regular"
+            android:fontFamily="@font/noto_sans_regular"
             android:layout_gravity="center"
             android:gravity="center"/>
     </LinearLayout>
@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/full_name"
                 android:textColor="#202020"
-                android:fontFamily="@font/notop_sans_regular"
+                android:fontFamily="@font/noto_sans_regular"
                 android:layout_gravity="start"
                 android:gravity="center"/>
             <EditText
@@ -66,7 +66,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/gender"
                 android:textColor="#202020"
-                android:fontFamily="@font/notop_sans_regular"
+                android:fontFamily="@font/noto_sans_regular"
                 android:layout_gravity="start"
                 android:gravity="center"/>
             <Spinner
@@ -90,7 +90,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/date_of_birth"
                 android:textColor="#202020"
-                android:fontFamily="@font/notop_sans_regular"
+                android:fontFamily="@font/noto_sans_regular"
                 android:layout_gravity="start"
                 android:gravity="center"/>
             <EditText
@@ -117,7 +117,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/number_phone"
                 android:textColor="#202020"
-                android:fontFamily="@font/notop_sans_regular"
+                android:fontFamily="@font/noto_sans_regular"
                 android:layout_gravity="start"
                 android:gravity="center"/>
             <EditText
@@ -145,7 +145,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/prompt_password"
                 android:textColor="#202020"
-                android:fontFamily="@font/notop_sans_regular"
+                android:fontFamily="@font/noto_sans_regular"
                 android:layout_gravity="start"
                 android:gravity="center"/>
             <EditText

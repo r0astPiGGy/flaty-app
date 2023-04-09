@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="hcmute.edu.vn.phamdinhquochoa.flatyapp.fragments.ChatFragment"
+    tools:context=".fragments.ChatFragment"
     android:orientation="vertical">
 
     <TextView
@@ -140,7 +140,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:fontFamily="@font/notop_sans_regular"
+            android:fontFamily="@font/noto_sans_regular"
             android:minWidth="150dp"
             android:padding="10dp"
             android:text="@string/send_request"

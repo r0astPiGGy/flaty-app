@@ -7,7 +7,7 @@ android {
     compileSdk 32
 
     defaultConfig {
-        applicationId "hcmute.edu.vn.phamdinhquochoa.flatyapp"
+        applicationId "com.rodev.flatyapp"
         minSdk 28
         targetSdk 32
         versionCode 1
@@ -29,7 +29,7 @@ android {
     buildFeatures {
         viewBinding true
     }
-    namespace 'hcmute.edu.vn.phamdinhquochoa.Flatyapp'
+    namespace 'com.rodev.flatyapp'
 }
 
 dependencies {

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="hcmute.edu.vn.phamdinhquochoa.flatyapp.RegionActivity"
+    tools:context="com.rodev.flatyapp.RegionActivity"
     android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
@@ -50,20 +50,20 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:minWidth="125dp"
-                android:fontFamily="@font/notop_sans_regular"
+                android:fontFamily="@font/noto_sans_regular"
                 android:padding="10dp"
                 android:text="@string/edit_region"
                 android:textColor="@color/black"
                 android:layout_marginEnd="15dp"
                 android:textSize="15sp" />
 
-            <hcmute.edu.vn.phamdinhquochoa.flatyapp.view.AsyncButton
+            <com.rodev.flatyapp.view.AsyncButton
                 android:id="@+id/button_delete_region"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:minWidth="125dp"
                 android:layout_gravity="center"
-                android:fontFamily="@font/notop_sans_regular"
+                android:fontFamily="@font/noto_sans_regular"
                 android:padding="10dp"
                 android:text="@string/delete_region"
                 android:backgroundTint="@color/delete"
@@ -77,7 +77,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:minWidth="200dp"
-            android:fontFamily="@font/notop_sans_regular"
+            android:fontFamily="@font/noto_sans_regular"
             android:padding="10dp"
             android:text="@string/add_flat"
             android:textColor="@color/black"
@@ -112,7 +112,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:fontFamily="@font/notop_sans_regular"
+                    android:fontFamily="@font/noto_sans_regular"
                     android:textSize="16sp"
                     android:gravity="center"
                     android:textStyle="bold"
@@ -121,14 +121,14 @@
                     android:id="@+id/tvRegionAddress_category"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/notop_sans_regular"
+                    android:fontFamily="@font/noto_sans_regular"
                     android:textStyle="italic"
                     android:text="@string/address" />
                 <TextView
                     android:id="@+id/tvRegionPhone_category"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/notop_sans_regular"
+                    android:fontFamily="@font/noto_sans_regular"
                     android:text="@string/number_phone" />
 
                 <androidx.recyclerview.widget.RecyclerView
